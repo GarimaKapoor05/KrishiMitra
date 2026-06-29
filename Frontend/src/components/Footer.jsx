@@ -13,7 +13,7 @@ export default function Footer() {
         </div>
 
         {[
-          { title: "Product", links: ["Dashboard", "Disease Detection", "Crop Advisor", "AI Assistant"] },
+          { title: "Product", links: ["Dashboard", "Disease Detection", "Crop Prediction", "AI Assistant"] },
           { title: "Company", links: ["About", "Careers", "Press", "Contact"] },
           { title: "Sustainability", links: ["Carbon reports", "Climate action", "Partner farms"] }
         ].map((section) => (

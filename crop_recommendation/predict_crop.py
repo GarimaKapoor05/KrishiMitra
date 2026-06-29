@@ -1,5 +1,5 @@
 """
-AgriNova AI — Crop Recommendation Module
+AgriAI — Crop Recommendation Module
 ==========================================
 Predicts the best crop to grow given soil & weather conditions, and gives
 a fertilizer suggestion on top of it.
