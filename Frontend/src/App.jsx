@@ -21,10 +21,10 @@ function Home() {
       <Stats />
       <FeatureShowcase />
       <Workflow />
-      <ExploreFeatures />
       <AnalyticsDashboard />
       <SpeakSnapSow />
       <ClimateSmart />
+      <ExploreFeatures />
       <CallToAction />
     </>
   );
