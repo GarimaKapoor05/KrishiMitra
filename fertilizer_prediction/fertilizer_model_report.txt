@@ -1,0 +1,18 @@
+Fertilizer Condition Classifier — Random Forest
+Test Accuracy: 90.00%
+
+               precision    recall  f1-score   support
+
+  K_deficient       0.98      0.98      0.98        89
+ NK_deficient       0.94      0.87      0.90        53
+NPK_deficient       0.93      0.78      0.85        32
+ NP_deficient       0.92      0.93      0.93        61
+  N_deficient       0.93      0.97      0.95        99
+ PK_deficient       0.94      0.91      0.93        55
+  P_deficient       0.90      0.94      0.92       102
+     balanced       0.78      0.75      0.76        69
+       excess       0.83      0.85      0.84       100
+
+     accuracy                           0.90       660
+    macro avg       0.90      0.89      0.89       660
+ weighted avg       0.90      0.90      0.90       660
