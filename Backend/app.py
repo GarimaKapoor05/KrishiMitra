@@ -8,6 +8,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(BASE_DIR, "crop_recommendation"))
 sys.path.append(os.path.join(BASE_DIR, "fertilizer_prediction"))
 sys.path.append(os.path.join(BASE_DIR, "irrigation_advisor"))
+sys.path.append(os.path.join(BASE_DIR, "market_price_prediction")) # Connected Price Prediction path
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -17,6 +18,7 @@ import numpy as np
 # Import existing modules
 from predict_crop import predict_crop
 from predict_fertilizer import predict_fertilizer, get_dosage_for_recommendation
+from predict_price import forecast_price # Connected LSTM forecasting logic
 
 app = Flask(__name__)
 CORS(app)
@@ -130,6 +132,20 @@ def predict_irrigation():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 400
+
+
+# ====================== MARKET FORECAST ROUTE ======================
+@app.route("/api/market/forecast", methods=["POST"])
+def market_forecast_route():
+    data = request.json
+    if not data or 'recent_prices' not in data:
+        return jsonify({"error": "Missing recent price data"}), 400
+        
+    try:
+        result = forecast_price(data)
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == "__main__":
