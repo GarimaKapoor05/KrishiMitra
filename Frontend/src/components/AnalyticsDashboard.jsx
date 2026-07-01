@@ -12,12 +12,34 @@ const priceData = [
 export default function AnalyticsDashboard() {
   return (
     <section className="py-20 px-6 max-w-7xl mx-auto">
-      <h2 className="text-3xl font-bold mb-10 text-brand-green">Live Analytics & Forecasting</h2>
-      
+
+      <div className="flex items-center gap-4 mb-10">
+        <h2 className="text-3xl font-bold text-brand-green">
+          Live Analytics & Forecasting
+        </h2>
+        <span className="text-xs font-semibold bg-amber-100 text-amber-700 px-3 py-1 rounded-full border border-amber-200">
+          📊 Simulated Data
+        </span>
+      </div>
+
+      <p className="text-gray-500 text-sm mb-8 -mt-6">
+        Charts below use simulated data for demonstration. In production, these connect live to
+        Agmarknet mandi price APIs and farm sensor feeds.
+      </p>
+
       <div className="grid md:grid-cols-2 gap-8">
+
         {/* Chart 1: Price Trend Forecasting */}
         <motion.div className="bg-white p-6 rounded-3xl border border-emerald-100 shadow-sm">
-          <h3 className="font-bold mb-6">Price Trend Forecast (LSTM Model)</h3>
+          <div className="flex items-start justify-between mb-1">
+            <h3 className="font-bold">Price Trend Forecast (LSTM Model)</h3>
+            <span className="text-xs text-amber-600 font-medium bg-amber-50 px-2 py-0.5 rounded-full whitespace-nowrap ml-2">
+              Demo
+            </span>
+          </div>
+          <p className="text-xs text-gray-400 mb-5">
+            Simulated ₹/quintal values — live model trains on Agmarknet data
+          </p>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={priceData}>
@@ -33,7 +55,15 @@ export default function AnalyticsDashboard() {
 
         {/* Chart 2: Profit Analysis */}
         <motion.div className="bg-white p-6 rounded-3xl border border-emerald-100 shadow-sm">
-          <h3 className="font-bold mb-6">Yield vs. Profit Analysis</h3>
+          <div className="flex items-start justify-between mb-1">
+            <h3 className="font-bold">Yield vs. Profit Analysis</h3>
+            <span className="text-xs text-amber-600 font-medium bg-amber-50 px-2 py-0.5 rounded-full whitespace-nowrap ml-2">
+              Demo
+            </span>
+          </div>
+          <p className="text-xs text-gray-400 mb-5">
+            Illustrative figures — live data integrates with farm yield records and market rates
+          </p>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={priceData}>
@@ -46,7 +76,9 @@ export default function AnalyticsDashboard() {
             </ResponsiveContainer>
           </div>
         </motion.div>
+
       </div>
+
     </section>
   );
 }

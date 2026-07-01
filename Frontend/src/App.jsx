@@ -14,7 +14,8 @@ import Footer from "./components/Footer";
 
 import CropPrediction from "./pages/CropPrediction";
 import FertilizerPrediction from "./pages/FertilizerPrediction";
-import DiseaseAI from "./components/DiseaseAI";
+// import DiseaseAI from "./components/DiseaseAI";
+import ComingSoon from "./pages/ComingSoon";
 
 function Home() {
   return (
@@ -41,7 +42,12 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/crop-prediction" element={<CropPrediction />} />
         <Route path="/fertilizer-prediction" element={<FertilizerPrediction />} />
-        <Route path="/disease-ai" element={<DiseaseAI />} />
+        <Route path="/features/voice-assistant" element={<ComingSoon feature="🎙️ AI Voice Assistant" />} />
+        <Route path="/features/irrigation" element={<ComingSoon feature="💧 Smart Irrigation Advisor" />} />
+        <Route path="/disease-ai" element={<ComingSoon feature="🔬 AI Disease Detection" />} />
+        <Route path="/features/price-prediction" element={<ComingSoon feature="📈 Market Price Prediction" />} />
+        <Route path="/features/health-monitor" element={<ComingSoon feature="🌿 Crop Health Monitoring" />} />
+        <Route path="/features/records" element={<ComingSoon feature="📑 Digital Farm Record" />} />
       </Routes>
 
       <Footer />
