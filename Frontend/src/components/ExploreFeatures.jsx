@@ -27,7 +27,7 @@ export default function ExploreFeatures() {
             </div>
             <h3 className="text-xl font-bold mb-2 group-hover:text-brand-green transition">{f.title}</h3>
             <p className="text-gray-500 mb-6">{f.desc}</p>
-            <span className="text-brand-green font-bold text-sm">Explore Module →</span>
+            <span className="text-brand-green font-bold text-sm">Explore →</span>
           </motion.a>
         ))}
       </div>
