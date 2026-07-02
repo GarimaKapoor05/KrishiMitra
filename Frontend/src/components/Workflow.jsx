@@ -1,42 +1,72 @@
 import { motion } from 'framer-motion';
 
 const steps = [
-  { title: "Unified Authentication", desc: "Access your portal via Firebase or Clerk." },
-  { title: "Environment Profiling", desc: "Input soil composition for AI calibration." },
-  { title: "Multilingual Voice Input", desc: "Speak directly to KrishiMitra for support." },
-  { title: "Computer Vision Diagnosis", desc: "Detect diseases via YOLOv8 snapshots." },
-  { title: "Predictive Analytics", desc: "Forecast yields and nitrogen needs." },
-  { title: "Dynamic Crop Advisor", desc: "AI-driven suggestions based on weather." },
-  { title: "Market Trend Forecast", desc: "Visualize price data to find selling windows." },
-  { title: "Logistics & Marketplace", desc: "Finalize sales and track shipments." }
+  {
+    title: "Create Your Farm Profile",
+    desc: "Register with your phone number. Add your land area, location, and soil type to get started."
+  },
+  {
+    title: "Analyse Your Soil",
+    desc: "Enter your soil's N-P-K values and pH. KrishiMitra calibrates every recommendation to your actual field conditions."
+  },
+  {
+    title: "Get Your Crop Recommendation",
+    desc: "Our AI suggests the best crop for your soil, climate, and season — with a confidence score and expected yield."
+  },
+  {
+    title: "Plan Your Fertilizer",
+    desc: "Know exactly which fertilizer to use, how much, and whether to go chemical or organic — calculated for your field size."
+  },
+  {
+    title: "Schedule Irrigation",
+    desc: "Get a watering schedule based on your crop's needs, local weather, and soil moisture levels."
+  },
+  {
+    title: "Monitor Crop Health",
+    desc: "Upload a photo of your crop or leaf. AI detects diseases, pests, and nutrient deficiencies early — before they spread."
+  },
+  {
+    title: "Track Market Prices",
+    desc: "See today's mandi prices and AI forecasts for the next 24 hours. Know the best time to sell before you leave the farm."
+  },
+  {
+    title: "Sell & Track Your Harvest",
+    desc: "Connect directly with buyers, FPOs, and mandis. Track your shipment and get paid — no middlemen."
+  }
 ];
 
 export default function Workflow() {
   return (
-    <section className="py-24 px-6 max-w-5xl mx-auto">
-      <h2 className="text-4xl font-black text-center mb-16">The Intelligent Farm Journey</h2>
+    <section className="py-24 px-6 max-w-5xl mx-auto transition-colors duration-300">
+      <h2 className="text-4xl font-black text-center mb-4 text-gray-900 dark:text-white">
+        The Intelligent Farm Journey
+      </h2>
+      <p className="text-center text-gray-500 dark:text-gray-400 mb-16 max-w-xl mx-auto">
+        From soil analysis to market sale — KrishiMitra guides every step of your farming season.
+      </p>
+
       <div className="relative">
-        {/* The Vertical Line */}
+        {/* Vertical line */}
         <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-green to-emerald-200" />
-        
+
         {steps.map((step, index) => {
-          const isLeft = index % 2 === 0; // 0, 2, 4, 6 are 1, 3, 5, 7 (Left)
+          const isLeft = index % 2 === 0;
           return (
-            <motion.div 
+            <motion.div
+              key={index}
               initial={{ opacity: 0, x: isLeft ? -50 : 50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1.0, ease: "easeInOut" }} // Slower duration
+              transition={{ duration: 1.0, ease: "easeInOut" }}
               viewport={{ once: true }}
-              key={index}
               className={`relative flex items-center mb-20 ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'}`}
             >
-              <div className="absolute left-4 md:left-1/2 -ml-3 w-6 h-6 bg-white border-2 border-brand-green rounded-full flex items-center justify-center font-bold text-xs text-brand-green shadow-lg z-10">
+              <div className="absolute left-4 md:left-1/2 -ml-3 w-6 h-6 bg-white dark:bg-gray-800 border-2 border-brand-green dark:border-emerald-400 rounded-full flex items-center justify-center font-bold text-xs text-brand-green dark:text-emerald-400 shadow-lg z-10 transition-colors">
                 {index + 1}
               </div>
-              
+
               <div className={`w-full md:w-1/2 ${isLeft ? 'md:pr-20 md:text-right' : 'md:pl-20'} ml-10 md:ml-0`}>
-                <h3 className="font-bold text-xl mb-2 text-gray-900">{step.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{step.desc}</p>
+                <h3 className="font-bold text-xl mb-2 text-gray-900 dark:text-white">{step.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{step.desc}</p>
               </div>
             </motion.div>
           );

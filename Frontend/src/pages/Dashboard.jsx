@@ -59,17 +59,17 @@ const modules = [
     status: "live",
   },
   {
-    title: "Disease Detection",
-    desc: "Upload a leaf image for instant AI diagnosis.",
-    icon: Bug,
-    link: "/disease-ai",
-    status: "coming",
-  },
-  {
     title: "Price Forecaster",
     desc: "LSTM-powered market price predictions.",
     icon: TrendingUp,
     link: "/features/price-prediction",
+    status: "live",
+  },
+  {
+    title: "Disease Detection",
+    desc: "Upload a leaf image for instant AI diagnosis.",
+    icon: Bug,
+    link: "/disease-ai",
     status: "coming",
   },
   {
@@ -112,9 +112,9 @@ const alerts = [
 ];
 
 const alertStyles = {
-  warning: "bg-amber-50 border-amber-300 text-amber-800",
-  info: "bg-blue-50 border-blue-300 text-blue-800",
-  success: "bg-green-50 border-green-300 text-green-700",
+  warning: "bg-amber-50 dark:bg-amber-900/20 border-amber-300 dark:border-amber-600 text-amber-800 dark:text-amber-300",
+  info: "bg-blue-50 dark:bg-blue-900/20 border-blue-300 dark:border-blue-600 text-blue-800 dark:text-blue-300",
+  success: "bg-green-50 dark:bg-green-900/20 border-green-300 dark:border-green-600 text-green-700 dark:text-green-300",
 };
 
 const alertIcons = {
@@ -141,7 +141,7 @@ export default function Dashboard() {
   });
 
   return (
-    <div className="min-h-screen bg-[#FDFEFC] pt-28 pb-20 px-6">
+    <div className="min-h-screen bg-bg-light dark:bg-gray-900 text-gray-900 dark:text-gray-100 pt-28 pb-20 px-6 transition-colors duration-200">
       <div className="max-w-7xl mx-auto space-y-10">
 
         {/* ── Header ── */}
@@ -151,10 +151,10 @@ export default function Dashboard() {
           className="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
         >
           <div>
-            <h1 className="text-4xl font-extrabold text-gray-900">
+            <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white">
               Good morning, Farmer 👋
             </h1>
-            <p className="text-gray-500 mt-1">{today}</p>
+            <p className="text-gray-500 dark:text-gray-400 mt-1">{today}</p>
           </div>
           <span className="text-xs font-semibold bg-amber-100 text-amber-700 px-3 py-1.5 rounded-full border border-amber-200 self-start md:self-auto">
             📊 Platform Overview — Demo View
@@ -169,15 +169,15 @@ export default function Dashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6"
+            className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm p-6"
           >
             <div className="flex items-center justify-between mb-4">
-              <h2 className="font-bold text-lg">Today's Weather</h2>
+              <h2 className="font-bold text-lg text-gray-900 dark:text-white">Today's Weather</h2>
               <span className="text-xs text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full font-medium">
                 Sample
               </span>
             </div>
-            <p className="text-xs text-gray-400 mb-5">
+            <p className="text-xs text-gray-500 dark:text-gray-400 mb-5">
               Live data connects to IMD weather API in production
             </p>
             <div className="space-y-4">
@@ -185,12 +185,12 @@ export default function Dashboard() {
                 { icon: Thermometer, label: "Temperature", value: "28°C", color: "text-orange-500" },
                 { icon: Droplets, label: "Humidity", value: "72%", color: "text-blue-500" },
                 { icon: CloudRain, label: "Rainfall", value: "4mm expected", color: "text-indigo-500" },
-                { icon: Wind, label: "Wind Speed", value: "14 km/h", color: "text-gray-500" },
+                { icon: Wind, label: "Wind Speed", value: "14 km/h", color: "text-gray-400 dark:text-gray-300" },
               ].map((w, i) => {
                 const Icon = w.icon;
                 return (
                   <div key={i} className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-gray-500">
+                    <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
                       <Icon size={16} className={w.color} />
                       <span className="text-sm">{w.label}</span>
                     </div>
@@ -206,14 +206,14 @@ export default function Dashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="md:col-span-2 bg-white rounded-3xl border border-gray-100 shadow-sm p-6"
+            className="md:col-span-2 bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 transition-colors"
           >
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <Bell size={18} className="text-brand-green" />
-                <h2 className="font-bold text-lg">Smart Alerts</h2>
+                <h2 className="font-bold text-lg text-gray-900 dark:text-white">Smart Alerts</h2>
               </div>
-              <span className="text-xs text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full font-medium">
+              <span className="text-xs text-amber-600 dark:text-amber-300 bg-amber-50 dark:bg-amber-900/30 px-2 py-0.5 rounded-full font-medium">
                 Simulated
               </span>
             </div>
@@ -225,7 +225,7 @@ export default function Dashboard() {
                 >
                   <span className="mr-2">{alertIcons[alert.type]}</span>
                   {alert.message}
-                  <span className="block text-xs opacity-60 mt-1">{alert.time}</span>
+                  <span className="block text-xs text-gray-500 dark:text-gray-400 mt-1">{alert.time}</span>
                 </div>
               ))}
             </div>
@@ -239,7 +239,7 @@ export default function Dashboard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
             🌾 Platform Modules
           </h2>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -247,25 +247,25 @@ export default function Dashboard() {
               const Icon = mod.icon;
               return (
                 <Link to={mod.link} key={i}>
-                  <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 hover:shadow-md hover:border-green-200 transition-all group h-full">
+                  <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-5 hover:shadow-md hover:border-green-200 dark:hover:border-emerald-400 transition-all group h-full">
                     <div className="flex items-start justify-between mb-3">
-                      <div className="bg-green-50 rounded-xl p-2">
+                      <div className="bg-green-50 dark:bg-gray-800 rounded-xl p-2">
                         <Icon size={20} className="text-brand-green" />
                       </div>
                       {mod.status === "live" ? (
-                        <span className="text-xs font-semibold bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
+                        <span className="text-xs font-semibold bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-200 px-2 py-0.5 rounded-full">
                           ✅ Live
                         </span>
                       ) : (
-                        <span className="text-xs font-semibold bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">
+                        <span className="text-xs font-semibold bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-200 px-2 py-0.5 rounded-full">
                           🔧 Soon
                         </span>
                       )}
                     </div>
-                    <h3 className="font-bold text-gray-900 mb-1 text-sm">
+                    <h3 className="font-bold text-gray-900 dark:text-white mb-1 text-sm">
                       {mod.title}
                     </h3>
-                    <p className="text-xs text-gray-500 leading-relaxed">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
                       {mod.desc}
                     </p>
                     <div className="flex items-center gap-1 mt-3 text-brand-green text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
@@ -283,27 +283,34 @@ export default function Dashboard() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8"
+          className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm p-8"
         >
           <div className="flex items-center justify-between mb-1">
             <div className="flex items-center gap-2">
               <BarChart2 size={20} className="text-brand-green" />
-              <h2 className="font-bold text-lg">Crop Price Trends</h2>
+              <h2 className="font-bold text-lg text-gray-900 dark:text-white">Crop Price Trends</h2>
             </div>
-            <span className="text-xs font-semibold bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full border border-amber-200">
+            <span className="text-xs font-semibold bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 px-2 py-0.5 rounded-full border border-amber-200 dark:border-amber-500">
               📊 Simulated Data
             </span>
           </div>
-          <p className="text-xs text-gray-400 mb-6">
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-6">
             Illustrative ₹/quintal values — live model connects to Agmarknet mandi price API
           </p>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={priceData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip formatter={(val) => `₹${val}/q`} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                <XAxis dataKey="month" stroke="#9CA3AF" />
+                <YAxis stroke="#9CA3AF" />
+                <Tooltip
+                    formatter={(val) => `₹${val}/q`}
+                    contentStyle={{
+                        backgroundColor: "#1F2937",
+                        border: "1px solid #374151",
+                        color: "#F9FAFB",
+                    }}
+                />
                 <Area
                   type="monotone"
                   dataKey="wheat"
@@ -321,7 +328,7 @@ export default function Dashboard() {
               </AreaChart>
             </ResponsiveContainer>
           </div>
-          <div className="flex gap-6 mt-4 justify-center text-xs text-gray-500">
+          <div className="flex gap-6 mt-4 justify-center text-xs text-gray-500 dark:text-gray-400">
             <span className="flex items-center gap-1">
               <span className="w-3 h-3 rounded-full bg-amber-400 inline-block" />
               Wheat

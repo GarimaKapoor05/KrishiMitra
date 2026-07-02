@@ -86,20 +86,23 @@ export default function SmartIrrigationAdvisor() {
 
   const priorityStyle = {
     High: {
-      badge: "bg-red-100 text-red-700",
+      badge:
+        "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300",
       icon: "🔴",
     },
     Medium: {
-      badge: "bg-yellow-100 text-yellow-700",
+      badge:
+        "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300",
       icon: "🟡",
     },
     Low: {
-      badge: "bg-emerald-100 text-emerald-700",
+      badge:
+        "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300",
       icon: "🟢",
     },
   };
     return (
-    <div className="min-h-screen bg-[#F8FBF8] py-16">
+    <div className="min-h-screen bg-bg-light dark:bg-gray-900 py-16 transition-colors duration-200">
       <div className="max-w-5xl mx-auto px-6">
 
         {/* Hero */}
@@ -108,25 +111,25 @@ export default function SmartIrrigationAdvisor() {
             <Droplets className="w-10 h-10 text-emerald-600" />
           </div>
 
-          <h1 className="text-5xl font-bold tracking-tight text-emerald-950">
+          <h1 className="text-5xl font-bold tracking-tight text-emerald-950 dark:text-white">
             Smart Irrigation Advisor
           </h1>
 
-          <p className="mt-4 text-lg text-emerald-700 max-w-2xl mx-auto leading-8">
+          <p className="mt-4 text-lg text-emerald-700 dark:text-emerald-300 max-w-2xl mx-auto leading-8">
             Enter your latest field conditions and let AI recommend the most
             efficient irrigation strategy.
           </p>
         </div>
 
         {/* Form */}
-        <div className="bg-white rounded-3xl border border-emerald-100 shadow-sm p-8 md:p-10">
+        <div className="bg-white dark:bg-gray-800 rounded-3xl border border-emerald-100 dark:border-gray-700 shadow-sm p-8 md:p-10 transition-colors">
 
           <div className="mb-8">
-            <h2 className="text-2xl font-semibold text-emerald-900">
+            <h2 className="text-2xl font-semibold text-emerald-900 dark:text-white">
               Enter Field Conditions
             </h2>
 
-            <p className="mt-2 text-emerald-600">
+            <p className="mt-2 text-emerald-600 dark:text-emerald-300">
               Sample values are acceptable for demonstration purposes.
             </p>
           </div>
@@ -164,7 +167,7 @@ export default function SmartIrrigationAdvisor() {
             ].map((field) => (
               <div key={field.name}>
 
-                <label className="flex items-center gap-2 mb-2 text-sm font-medium text-emerald-800">
+                <label className="flex items-center gap-2 mb-2 text-sm font-medium text-emerald-800 dark:text-emerald-300">
                   <field.icon className="w-4 h-4 text-emerald-600" />
                   {field.label}
                 </label>
@@ -177,7 +180,7 @@ export default function SmartIrrigationAdvisor() {
                   placeholder={field.placeholder}
                   step="0.1"
                   required
-                  className="w-full rounded-2xl border border-emerald-200 px-5 py-4 text-lg outline-none transition-all focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
+                  className="w-full rounded-2xl border border-emerald-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-5 py-4 text-lg outline-none transition-all focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 dark:focus:ring-emerald-900/30"
                 />
 
               </div>
@@ -208,9 +211,9 @@ export default function SmartIrrigationAdvisor() {
           </form>
 
           {error && (
-            <div className="mt-6 rounded-2xl border border-red-200 bg-red-50 p-4 flex gap-3">
+            <div className="mt-6 rounded-2xl border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20 p-4 flex gap-3">
               <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
-              <p className="text-sm text-red-700">
+              <p className="text-sm text-red-700 dark:text-red-300">
                 {error}
               </p>
             </div>
@@ -223,18 +226,18 @@ export default function SmartIrrigationAdvisor() {
   <div className="space-y-8">
 
     {/* Recommendation Card */}
-    <div className="bg-white rounded-3xl border border-emerald-100 shadow-sm overflow-hidden">
+    <div className="bg-white dark:bg-gray-800 rounded-3xl border border-emerald-100 dark:border-gray-700 shadow-sm overflow-hidden transition-colors">
 
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-emerald-100 px-8 py-6">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-emerald-100 dark:border-gray-700 px-8 py-6">
 
         <div>
-          <h2 className="text-2xl font-bold text-emerald-950 flex items-center gap-2">
+          <h2 className="text-2xl font-bold text-emerald-950 dark:text-white flex items-center gap-2">
             <Sparkles className="w-6 h-6 text-emerald-600" />
             AI Irrigation Recommendation
           </h2>
 
-          <p className="text-emerald-600 mt-1">
+          <p className="text-emerald-600 dark:text-emerald-300 mt-1">
             Generated using your field conditions.
           </p>
         </div>
@@ -263,11 +266,11 @@ export default function SmartIrrigationAdvisor() {
               : "💧"}
           </div>
 
-          <h3 className="text-4xl font-bold text-emerald-950">
+          <h3 className="text-4xl font-bold text-emerald-950 dark:text-white">
             {result.recommendation}
           </h3>
 
-          <p className="text-emerald-600 mt-3">
+          <p className="text-emerald-600 dark:text-emerald-300 mt-3">
             AI-powered recommendation based on the submitted inputs.
           </p>
 
@@ -277,25 +280,25 @@ export default function SmartIrrigationAdvisor() {
 
         <div className="grid md:grid-cols-3 gap-5 mb-8">
 
-          <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-6">
+          <div className="rounded-2xl border border-emerald-100 dark:border-emerald-900/30 bg-emerald-50 dark:bg-emerald-900/20 p-6">
 
-            <p className="text-sm text-emerald-700 mb-2">
+            <p className="text-sm text-emerald-700 dark:text-emerald-300 mb-2">
               Water Required
             </p>
 
-            <h4 className="text-3xl font-bold text-emerald-950">
+            <h4 className="text-3xl font-bold text-emerald-950 dark:text-white">
               {result.water_amount_mm} mm
             </h4>
 
           </div>
 
-          <div className="rounded-2xl border border-sky-100 bg-sky-50 p-6">
+          <div className="rounded-2xl border border-sky-100 dark:border-sky-900/30 bg-sky-50 dark:bg-sky-900/20 p-6">
 
-            <p className="text-sm text-sky-700 mb-2">
+            <p className="text-sm text-sky-700 dark:text-sky-300 mb-2">
               Recommended Method
             </p>
 
-            <h4 className="text-2xl font-semibold text-sky-900">
+            <h4 className="text-2xl font-semibold text-sky-900 dark:text-sky-300">
               {result.recommendation.startsWith("No")
                 ? "Monitoring"
                 : "Drip Irrigation"}
@@ -303,13 +306,13 @@ export default function SmartIrrigationAdvisor() {
 
           </div>
 
-          <div className="rounded-2xl border border-amber-100 bg-amber-50 p-6">
+          <div className="rounded-2xl border border-amber-100 dark:border-amber-900/30 bg-amber-50 dark:bg-amber-900/20 p-6">
 
-            <p className="text-sm text-amber-700 mb-2">
+            <p className="text-sm text-amber-700 dark:text-amber-300 mb-2">
               Confidence
             </p>
 
-            <h4 className="text-2xl font-semibold text-amber-900">
+            <h4 className="text-2xl font-semibold text-amber-900 dark:text-amber-300">
               {result.urgency === "High"
                 ? "High"
                 : result.urgency === "Medium"
@@ -323,13 +326,13 @@ export default function SmartIrrigationAdvisor() {
 
         {/* Why */}
 
-        <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-6">
+        <div className="rounded-2xl border border-emerald-100 dark:border-emerald-900/30 bg-emerald-50 dark:bg-emerald-900/20 p-6">
 
-          <h4 className="font-semibold text-emerald-950 mb-3">
+          <h4 className="font-semibold text-emerald-950 dark:text-white mb-3">
             Why this recommendation?
           </h4>
 
-          <p className="text-emerald-800 leading-7">
+          <p className="text-emerald-800 dark:text-emerald-300 leading-7">
             {result.advice}
           </p>
 
@@ -339,18 +342,18 @@ export default function SmartIrrigationAdvisor() {
 
     </div>
           {/* Key Insights */}
-      <div className="bg-white rounded-3xl border border-emerald-100 shadow-sm p-8">
+      <div className="bg-white dark:bg-gray-800 rounded-3xl border border-emerald-100 dark:border-gray-700 shadow-sm p-8">
 
         <div className="flex items-center gap-2 mb-6">
           <TrendingUp className="w-5 h-5 text-emerald-600" />
-          <h3 className="text-xl font-semibold text-emerald-950">
+          <h3 className="text-xl font-semibold text-emerald-950 dark:text-white">
             Key Insights
           </h3>
         </div>
 
         <div className="grid md:grid-cols-3 gap-5">
 
-          <div className="rounded-2xl bg-emerald-50 border border-emerald-100 p-5">
+          <div className="rounded-2xl bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-900/30 p-5">
             <div className="flex items-center gap-2 text-emerald-700 mb-3">
               <Clock3 className="w-5 h-5" />
               <span className="text-sm font-medium">
@@ -358,12 +361,12 @@ export default function SmartIrrigationAdvisor() {
               </span>
             </div>
 
-            <p className="text-2xl font-bold text-emerald-950">
+            <p className="text-2xl font-bold text-emerald-950 dark:text-white">
               {result.recommendation.startsWith("No") ? "24+ hrs" : "1 day"}
             </p>
           </div>
 
-          <div className="rounded-2xl bg-sky-50 border border-sky-100 p-5">
+          <div className="rounded-2xl bg-sky-50 dark:bg-sky-900/20 border border-sky-100 dark:border-sky-900/30 p-5">
             <div className="flex items-center gap-2 text-sky-700 mb-3">
               <Droplets className="w-5 h-5" />
               <span className="text-sm font-medium">
@@ -371,12 +374,12 @@ export default function SmartIrrigationAdvisor() {
               </span>
             </div>
 
-            <p className="text-2xl font-bold text-sky-900">
+            <p className="text-2xl font-bold text-sky-900 dark:text-sky-300">
               {Math.max(0, Math.round((parseFloat(formData.et || 4.5) * 2)))}%
             </p>
           </div>
 
-          <div className="rounded-2xl bg-amber-50 border border-amber-100 p-5">
+          <div className="rounded-2xl bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-900/30 p-5">
             <div className="flex items-center gap-2 text-amber-700 mb-3">
               <CheckCircle2 className="w-5 h-5" />
               <span className="text-sm font-medium">
@@ -384,7 +387,7 @@ export default function SmartIrrigationAdvisor() {
               </span>
             </div>
 
-            <p className="text-2xl font-bold text-amber-900">
+            <p className="text-2xl font-bold text-amber-900 dark:text-amber-300">
               Operational
             </p>
           </div>
@@ -394,7 +397,7 @@ export default function SmartIrrigationAdvisor() {
         {result.insights?.length > 0 && (
           <div className="mt-8">
 
-            <h4 className="text-lg font-semibold text-emerald-950 mb-4">
+            <h4 className="text-lg font-semibold text-emerald-950 dark:text-white mb-4">
               Field Observations
             </h4>
 
@@ -403,11 +406,11 @@ export default function SmartIrrigationAdvisor() {
               {result.insights.map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-start gap-3 rounded-2xl bg-emerald-50 border border-emerald-100 p-4"
+                  className="flex items-start gap-3 rounded-2xl bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-900/30 p-4"
                 >
                   <AlertTriangle className="w-5 h-5 text-amber-500 mt-0.5 flex-shrink-0" />
 
-                  <p className="text-emerald-900">
+                  <p className="text-emerald-900 dark:text-emerald-300">
                     {item}
                   </p>
                 </div>

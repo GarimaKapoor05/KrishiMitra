@@ -14,15 +14,13 @@ import Footer from "./components/Footer";
 
 import CropPrediction from "./pages/CropPrediction";
 import FertilizerPrediction from "./pages/FertilizerPrediction";
-import SmartIrrigationAdvisor from "./pages/SmartIrrigationAdvisor";   
-// import DiseaseAI from "./components/DiseaseAI";
+import SmartIrrigationAdvisor from "./pages/SmartIrrigationAdvisor";
 import ComingSoon from "./pages/ComingSoon";
 import DiseaseDetection from "./pages/DiseaseDetection";
 import Dashboard from "./pages/Dashboard";
-
-
-// 1. Import your new Market Price Prediction page here
 import MarketPricePrediction from "./pages/MarketPricePrediction";
+import UnderConstruction from "./pages/UnderConstruction";
+
 
 function Home() {
   return (
@@ -42,7 +40,7 @@ function Home() {
 
 function App() {
   return (
-    <div className="min-h-screen bg-[#FDFEFC] text-gray-900 font-sans">
+    <div className="min-h-screen bg-bg-light dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-200">
       <Navbar />
 
       <Routes>
@@ -52,13 +50,16 @@ function App() {
         <Route path="/features/irrigation" element={<SmartIrrigationAdvisor />} />
         <Route path="/disease-detection" element={<DiseaseDetection />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/features/voice-assistant" element={<ComingSoon feature="🎙️ AI Voice Assistant" />} />
-        
-        {/* 2. Replace the ComingSoon component with your actual MarketPricePrediction component */}
         <Route path="/features/price-prediction" element={<MarketPricePrediction />} />
-        
+        <Route path="/signup" element={<UnderConstruction />} />
+        <Route path="/login" element={<UnderConstruction />} />
+
+        <Route path="/disease-ai" element={<ComingSoon feature="🔬 AI Disease Detection" />} />
+        <Route path="/features/voice-assistant" element={<ComingSoon feature="🎙️ AI Voice Assistant" />} />
         <Route path="/features/health-monitor" element={<ComingSoon feature="🌿 Crop Health Monitoring" />} />
         <Route path="/features/records" element={<ComingSoon feature="📑 Digital Farm Record" />} />
+        <Route path="/features/calendar" element={<ComingSoon feature="📅 Crop Calendar & Task Planner" />} />
+        <Route path="/features/schemes" element={<ComingSoon feature="🏛️ Government Scheme Advisor" />} />
       </Routes>
 
       <Footer />

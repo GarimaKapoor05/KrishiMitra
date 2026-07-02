@@ -136,7 +136,7 @@ export default function FertilizerPrediction() {
   const capitalize = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : "");
 
   return (
-    <div className="min-h-screen bg-[#FDFEFC] pt-32 pb-20 px-6">
+    <div className="min-h-screen bg-bg-light dark:bg-gray-900 pt-32 pb-20 px-6">
 
       <div className="max-w-6xl mx-auto">
 
@@ -149,7 +149,7 @@ export default function FertilizerPrediction() {
             🌱 AI Fertilizer Prediction
           </h1>
 
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 dark:text-gray-300 text-lg max-w-2xl mx-auto">
             Select your crop and current soil nutrients.
             Our AI model will tell you exactly what your soil needs,
             with both chemical and organic fertilizer options.
@@ -160,16 +160,16 @@ export default function FertilizerPrediction() {
           onSubmit={handlePredict}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="bg-white rounded-3xl shadow-xl p-10 border border-gray-100"
+          className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-10 border border-gray-100 dark:border-gray-700 transition-colors"
         >
           <div className="grid md:grid-cols-2 gap-6">
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-900 dark:text-gray-200 mb-2">
                 Crop
               </label>
 
-              <div className="flex items-center border rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-green-500">
+              <div className="flex items-center border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-gray-900 dark:text-gray-100 focus-within:ring-2 focus-within:ring-green-500">
                 <Sprout className="text-green-600 mr-3" size={20} />
 
                 <select
@@ -177,26 +177,35 @@ export default function FertilizerPrediction() {
                   value={formData.crop}
                   onChange={handleChange}
                   required
-                  className="w-full outline-none bg-transparent"
+                  className="w-full outline-none bg-transparent text-gray-900 dark:text-gray-100"
                 >
-                  <option value="" disabled>
+                  <option
+                    value=""
+                    disabled
+                    className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                  >
                     Select a crop
                   </option>
+
                   {CROP_OPTIONS.map((crop) => (
-                    <option key={crop} value={crop}>
+                    <option
+                      key={crop}
+                      value={crop}
+                      className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                    >
                       {capitalize(crop)}
                     </option>
-                  ))}
+                 ))}
                 </select>
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-900 dark:text-gray-200 mb-2">
                 Nitrogen (N) in soil
               </label>
 
-              <div className="flex items-center border rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-green-500">
+              <div className="flex items-center border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-green-500">
                 <Leaf className="text-green-600 mr-3" size={20} />
 
                 <input
@@ -207,17 +216,17 @@ export default function FertilizerPrediction() {
                   onChange={handleChange}
                   placeholder="e.g. 40"
                   required
-                  className="w-full outline-none"
+                  className="w-full outline-none bg-transparent text-gray-900 dark:text-gray-100"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-900 dark:text-gray-200 mb-2">
                 Phosphorus (P) in soil
               </label>
 
-              <div className="flex items-center border rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-green-500">
+              <div className="flex items-center border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-green-500">
                 <FlaskConical className="text-green-600 mr-3" size={20} />
 
                 <input
@@ -228,17 +237,17 @@ export default function FertilizerPrediction() {
                   onChange={handleChange}
                   placeholder="e.g. 80"
                   required
-                  className="w-full outline-none"
+                  className="w-full outline-none bg-transparent text-gray-900 dark:text-gray-100"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-900 dark:text-gray-200 mb-2">
                 Potassium (K) in soil
               </label>
 
-              <div className="flex items-center border rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-green-500">
+              <div className="flex items-center border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-green-500">
                 <Sprout className="text-green-600 mr-3" size={20} />
 
                 <input
@@ -249,7 +258,7 @@ export default function FertilizerPrediction() {
                   onChange={handleChange}
                   placeholder="e.g. 20"
                   required
-                  className="w-full outline-none"
+                  className="w-full outline-none bg-transparent text-gray-900 dark:text-gray-100"
                 />
               </div>
             </div>
@@ -290,7 +299,7 @@ export default function FertilizerPrediction() {
           >
 
             {/* Condition + confidence */}
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
+            <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 p-8">
 
               <h2 className="text-2xl font-bold text-brand-green mb-6">
                 🌱 Soil Condition
@@ -299,11 +308,11 @@ export default function FertilizerPrediction() {
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
 
                 <div>
-                  <p className="text-gray-500 mb-2">
+                  <p className="text-gray-500 dark:text-gray-400 mb-2">
                     Detected Condition
                   </p>
 
-                  <h1 className="text-4xl font-extrabold text-green-700">
+                  <h1 className="text-4xl font-extrabold text-green-700 dark:text-green-400">
                     {result.condition.replace(/_/g, " ")}
                   </h1>
                 </div>
@@ -337,7 +346,7 @@ export default function FertilizerPrediction() {
             </div>
 
             {/* NPK comparison */}
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
+            <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 p-8">
 
               <h2 className="text-2xl font-bold mb-6">
                 📊 NPK Comparison
@@ -347,7 +356,7 @@ export default function FertilizerPrediction() {
 
                 <div>
                   <h3 className="font-bold text-lg mb-3">Ideal NPK</h3>
-                  <div className="space-y-2 text-gray-700">
+                  <div className="space-y-2 text-gray-700 dark:text-gray-300">
                     <p>Nitrogen : {result.ideal_npk.N}</p>
                     <p>Phosphorus : {result.ideal_npk.P}</p>
                     <p>Potassium : {result.ideal_npk.K}</p>
@@ -356,7 +365,7 @@ export default function FertilizerPrediction() {
 
                 <div>
                   <h3 className="font-bold text-lg mb-3">Your Soil</h3>
-                  <div className="space-y-2 text-gray-700">
+                  <div className="space-y-2 text-gray-700 dark:text-gray-300">
                     <p>Nitrogen : {result.input_npk.N}</p>
                     <p>Phosphorus : {result.input_npk.P}</p>
                     <p>Potassium : {result.input_npk.K}</p>
@@ -368,28 +377,28 @@ export default function FertilizerPrediction() {
             </div>
 
             {/* Fertilizer recommendation */}
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
+            <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 p-8">
 
-              <h2 className="text-2xl font-bold mb-6">
+              <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
                 🧪 Recommended Fertilizer
               </h2>
 
               <div className="grid md:grid-cols-2 gap-6">
 
-                <div className="bg-green-50 border-l-4 border-green-600 p-5 rounded-lg">
-                  <p className="text-sm font-semibold text-gray-500 mb-1">
+                <div className="bg-green-50 dark:bg-green-900/20 border-l-4 border-green-600 dark:border-green-500 p-5 rounded-lg">
+                  <p className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-1">
                     Chemical Option
                   </p>
-                  <p className="font-bold text-lg text-green-800">
+                  <p className="font-bold text-lg text-green-800 dark:text-green-300">
                     {result.chemical_fertilizer}
                   </p>
                 </div>
 
-                <div className="bg-amber-50 border-l-4 border-amber-600 p-5 rounded-lg">
-                  <p className="text-sm font-semibold text-gray-500 mb-1 flex items-center gap-1">
+                <div className="bg-amber-50 dark:bg-amber-900/20 border-l-4 border-amber-600 dark:border-amber-500 p-5 rounded-lg">
+                  <p className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-1 flex items-center gap-1">
                     <Recycle size={14} /> Organic Alternative
                   </p>
-                  <p className="font-bold text-lg text-amber-800">
+                  <p className="font-bold text-lg text-amber-800 dark:text-amber-300">
                     {result.organic_alternative}
                   </p>
                 </div>
@@ -399,25 +408,25 @@ export default function FertilizerPrediction() {
               {/* Dosage trigger */}
               <div className="mt-10 border-t pt-8">
 
-                <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
+                <h3 className="font-bold text-lg mb-4 flex items-center gap-2 text-gray-900 dark:text-white">
                   <Ruler size={20} className="text-green-600" />
                   Want the exact quantity for your field?
                 </h3>
 
                 <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
 
-                  <div className="flex items-center border rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-green-500 md:w-64">
+                  <div className="flex items-center border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-green-500">
                     <input
                       type="number"
                       step="any"
                       value={landArea}
                       onChange={(e) => setLandArea(e.target.value)}
                       placeholder="Land area (hectares)"
-                      className="w-full outline-none"
+                      className="w-full outline-none bg-transparent text-gray-900 dark:text-gray-100"
                     />
                   </div>
 
-                  <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                  <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                     <input
                       type="checkbox"
                       checked={useOrganic}
@@ -455,7 +464,7 @@ export default function FertilizerPrediction() {
                   className="mt-6"
                 >
                   {dosage.note ? (
-                    <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg">
+                    <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 dark:border-blue-400 p-4 rounded-lg text-blue-900 dark:text-blue-300">
                       ℹ️ {dosage.note}
                     </div>
                   ) : (
@@ -463,12 +472,12 @@ export default function FertilizerPrediction() {
                       {dosage.dosage_plan.map((item, index) => (
                         <div
                           key={index}
-                          className="flex justify-between items-center bg-green-50 rounded-xl p-4"
+                          className="flex justify-between items-center bg-green-50 dark:bg-green-900/20 rounded-xl p-4"
                         >
-                          <span className="font-semibold">
+                          <span className="font-semibold text-gray-900 dark:text-white">
                             {item.fertilizer}
                           </span>
-                          <span className="font-bold text-green-700">
+                          <span className="font-bold text-green-700 dark:text-green-300">
                             {item.total_kg_needed} kg total
                           </span>
                         </div>

@@ -117,7 +117,7 @@ export default function CropPrediction() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#FDFEFC] pt-32 pb-20 px-6">
+    <div className="min-h-screen bg-bg-light dark:bg-gray-900 text-gray-900 dark:text-gray-100 pt-32 pb-20 px-6 transition-colors duration-200">
 
       <div className="max-w-6xl mx-auto">
 
@@ -126,11 +126,11 @@ export default function CropPrediction() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h1 className="text-5xl font-extrabold text-brand-green mb-4">
+          <h1 className="text-5xl font-extrabold text-brand-green dark:text-emerald-400 mb-4">
             🌾 AI Crop Prediction
           </h1>
 
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 dark:text-gray-300 text-lg max-w-2xl mx-auto">
             Enter your soil nutrients and weather conditions.
             Our AI model will recommend the most suitable crop along with
             confidence score and fertilizer advice.
@@ -141,7 +141,7 @@ export default function CropPrediction() {
           onSubmit={handlePredict}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="bg-white rounded-3xl shadow-xl p-10 border border-gray-100"
+          className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-10 border border-gray-100 dark:border-gray-700"
         >
           <div className="grid md:grid-cols-2 gap-6">
 
@@ -151,13 +151,13 @@ export default function CropPrediction() {
               return (
                 <div key={field.name}>
 
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                     {field.label}
                   </label>
 
-                  <div className="flex items-center border rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-green-500">
+                  <div className="flex items-center border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-green-500">
 
-                    <Icon className="text-green-600 mr-3" size={20} />
+                    <Icon className="text-green-600 dark:text-green-400 mr-3" size={20} />
 
                     <input
                       type="number"
@@ -167,7 +167,7 @@ export default function CropPrediction() {
                       onChange={handleChange}
                       placeholder={field.placeholder}
                       required
-                      className="w-full outline-none"
+                      className="w-full outline-none bg-transparent text-gray-900 dark:text-gray-100"
                     />
 
                   </div>
@@ -183,7 +183,7 @@ export default function CropPrediction() {
             <button
               type="submit"
               disabled={loading}
-              className="bg-brand-green hover:bg-green-700 text-white px-10 py-4 rounded-full text-lg font-semibold transition"
+              className="bg-brand-green dark:bg-emerald-600 hover:bg-green-700 dark:hover:bg-emerald-500 text-white px-10 py-4 rounded-full text-lg font-semibold transition"
             >
 
               {loading ? (
@@ -217,17 +217,17 @@ export default function CropPrediction() {
 
             {/* Recommended Crop */}
 
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
+            <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 p-8">
 
               <h2 className="text-2xl font-bold text-brand-green mb-6">
                 🌾 AI Recommendation
               </h2>
 
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+              <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 p-8">
 
                 <div>
 
-                  <p className="text-gray-500 mb-2">
+                  <p className="text-gray-500 dark:text-gray-400 mb-2">
                     Recommended Crop
                   </p>
 
@@ -280,7 +280,7 @@ export default function CropPrediction() {
 
             {/* Top Predictions */}
 
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
+            <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 p-8">
 
               <h2 className="text-2xl font-bold mb-6">
                 🥇 Top Predictions
@@ -292,7 +292,7 @@ export default function CropPrediction() {
 
                   <div
                     key={index}
-                    className="flex justify-between items-center bg-green-50 rounded-xl p-4"
+                    className="flex justify-between items-center bg-green-50 dark:bg-gray-700 rounded-xl p-4"
                   >
 
                     <span className="font-semibold text-lg">
@@ -339,7 +339,7 @@ export default function CropPrediction() {
 
                   </h3>
 
-                  <div className="space-y-2 text-gray-700">
+                  <div className="space-y-2 text-gray-700 dark:text-gray-300">
 
                     <p>
 
@@ -424,7 +424,7 @@ export default function CropPrediction() {
 
                       <div
                         key={index}
-                        className="bg-green-50 border-l-4 border-green-600 p-4 rounded-lg"
+                        className="bg-green-50 dark:bg-gray-700 border-l-4 border-green-600 p-4 rounded-lg"
                       >
 
                         ✅ {suggestion}

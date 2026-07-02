@@ -1,0 +1,55 @@
+export const themes = {
+  light: {
+    name: "Light",
+    colors: {
+      background: "#F7FDF9",
+      card: "#FFFFFF",
+      primary: "#064E3B",
+      secondary: "#047857",
+      accent: "#059669",
+      border: "#D1FAE5",
+      input: "#ECFDF5",
+      button: "#059669",
+      buttonHover: "#047857",
+      success: "#16A34A",
+      warning: "#D97706",
+      danger: "#DC2626",
+    },
+  },
+
+  dark: {
+    name: "Dark",
+    colors: {
+      background: "#111827",
+      card: "#1F2937",
+      primary: "#F9FAFB",
+      secondary: "#D1D5DB",
+      accent: "#10B981",
+      border: "#374151",
+      input: "#374151",
+      button: "#10B981",
+      buttonHover: "#059669",
+      success: "#22C55E",
+      warning: "#FBBF24",
+      danger: "#F87171",
+    },
+  },
+
+  colorblind: {
+    name: "Color Blind",
+    colors: {
+      background: "#F5F7FA",
+      card: "#FFFFFF",
+      primary: "#0F172A",
+      secondary: "#334155",
+      accent: "#0057B8",
+      border: "#CBD5E1",
+      input: "#EFF6FF",
+      button: "#0057B8",
+      buttonHover: "#003F88",
+      success: "#0057B8",
+      warning: "#FF8C00",
+      danger: "#6B21A8",
+    },
+  },
+};

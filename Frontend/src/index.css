@@ -1,9 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-body { font-family: 'Inter', sans-serif; }
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  @apply bg-bg-light text-gray-900;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* 🌞 LIGHT */
+html.light body {
+  background: #f9faf7;
+  color: #111827;
+}
+
+/* 🌙 DARK */
+html.dark body {
+  background: #111827;
+  color: #f9fafb;
 }

@@ -4,7 +4,7 @@ import { Clock, ArrowLeft } from "lucide-react";
 
 export default function ComingSoon({ feature = "This Feature" }) {
   return (
-    <div className="min-h-screen bg-[#FDFEFC] pt-32 pb-20 px-6 flex items-center justify-center">
+    <div className="min-h-screen bg-bg-light dark:bg-gray-900 text-gray-900 dark:text-gray-100 pt-32 pb-20 px-6 flex items-center justify-center transition-colors duration-200">
 
       <div className="max-w-2xl mx-auto text-center">
 
@@ -16,7 +16,7 @@ export default function ComingSoon({ feature = "This Feature" }) {
 
           {/* Icon */}
           <div className="flex justify-center mb-8">
-            <div className="bg-green-50 rounded-full p-6">
+            <div className="bg-green-50 dark:bg-gray-800 rounded-full p-6 transition-colors">
               <Clock className="text-brand-green" size={48} />
             </div>
           </div>
@@ -26,22 +26,23 @@ export default function ComingSoon({ feature = "This Feature" }) {
             Coming Soon
           </h1>
 
-          <p className="text-2xl font-semibold text-gray-700 mb-4">
+          <p className="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-4">
             {feature}
           </p>
 
-          <p className="text-gray-500 text-lg mb-10 max-w-md mx-auto">
+          <p className="text-gray-500 dark:text-gray-400 text-lg mb-10 max-w-md mx-auto">
             Our team is actively building this module. It will be available
             very soon as part of the KrishiMitra platform.
           </p>
 
-          {/* Progress bar — decorative, shows "in progress" feel */}
+          {/* Progress bar */}
           <div className="w-full max-w-sm mx-auto mb-10">
-            <div className="flex justify-between text-sm text-gray-500 mb-2">
+            <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400 mb-2">
               <span>Development Progress</span>
               <span className="font-semibold text-brand-green">70%</span>
             </div>
-            <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+
+            <div className="w-full h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: "70%" }}

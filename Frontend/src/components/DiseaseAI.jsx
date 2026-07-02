@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import axios from 'axios';
+// Light/Dark mode changes required in this file
 
 export default function DiseaseAI() {
   const [result, setResult] = useState(null);
