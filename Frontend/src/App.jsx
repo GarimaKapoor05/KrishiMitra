@@ -18,6 +18,8 @@ import SmartIrrigationAdvisor from "./pages/SmartIrrigationAdvisor";
 // import DiseaseAI from "./components/DiseaseAI";
 import ComingSoon from "./pages/ComingSoon";
 import DiseaseDetection from "./pages/DiseaseDetection";
+import Dashboard from "./pages/Dashboard";
+
 
 // 1. Import your new Market Price Prediction page here
 import MarketPricePrediction from "./pages/MarketPricePrediction";
@@ -49,6 +51,7 @@ function App() {
         <Route path="/fertilizer-prediction" element={<FertilizerPrediction />} />
         <Route path="/features/irrigation" element={<SmartIrrigationAdvisor />} />
         <Route path="/disease-detection" element={<DiseaseDetection />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/features/voice-assistant" element={<ComingSoon feature="🎙️ AI Voice Assistant" />} />
         
         {/* 2. Replace the ComingSoon component with your actual MarketPricePrediction component */}

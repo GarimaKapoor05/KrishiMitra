@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from "react-router-dom";
 
 export default function Hero() {
   return (
@@ -16,9 +17,11 @@ export default function Hero() {
           market trends to ensure every acre is profitable and sustainable.
         </p>
         <div className="flex gap-4">
-          <button className="bg-brand-green text-white px-8 py-4 rounded-xl font-bold hover:bg-emerald-700 transition duration-300">
-            View Dashboard
-          </button>
+          <Link to="/dashboard">
+            <button className="bg-brand-green text-white px-8 py-4 rounded-xl font-bold hover:bg-emerald-700 transition duration-300">
+              View Dashboard
+            </button>
+          </Link>
           <a href="/#capabilities">
             <button className="border border-gray-200 px-8 py-4 rounded-xl font-bold text-gray-700 hover:bg-gray-50 transition duration-300">
               Explore Features
