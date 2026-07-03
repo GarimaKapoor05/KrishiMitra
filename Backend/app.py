@@ -40,7 +40,7 @@ from predict_price import forecast_price
 app = Flask(__name__)
 app.config.from_object(Config)
 
-CORS(app, origins=["http://localhost:5173", "https://your-frontend.vercel.app"])
+CORS(app, origins=["http://localhost:5173", "https://krishi-ai-sepia.vercel.app/"])
 
 jwt = JWTManager(app)
 
