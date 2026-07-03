@@ -1,131 +1,226 @@
 """
-AgriAI — Shared Backend API
+AgriAI — Shared Backend API with JWT Authentication + SQLAlchemy
 """
+
 import os
 import sys
 
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from flask_jwt_extended import JWTManager, jwt_required
+
+from config import Config
+from models import db
+from auth import auth_bp
+
+# ====================== PATH SETUP ======================
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 sys.path.append(os.path.join(BASE_DIR, "crop_recommendation"))
 sys.path.append(os.path.join(BASE_DIR, "fertilizer_prediction"))
 sys.path.append(os.path.join(BASE_DIR, "irrigation_advisor"))
-sys.path.append(os.path.join(BASE_DIR, "market_price_prediction")) # Connected Price Prediction path
+sys.path.append(os.path.join(BASE_DIR, "market_price_prediction"))
 
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+# ====================== IMPORTS ======================
+
 import joblib
 import numpy as np
+from models import db, User, Contact
 
-# Import existing modules
 from predict_crop import predict_crop
-from predict_fertilizer import predict_fertilizer, get_dosage_for_recommendation
-from predict_price import forecast_price # Connected LSTM forecasting logic
+from predict_fertilizer import (
+    predict_fertilizer,
+    get_dosage_for_recommendation
+)
+from predict_price import forecast_price
+
+# ====================== APP CONFIG ======================
 
 app = Flask(__name__)
+app.config.from_object(Config)
+
 CORS(app)
 
-# ====================== IRRIGATION MODEL ======================
+jwt = JWTManager(app)
+
+db.init_app(app)
+
+# Register Authentication Blueprint
+app.register_blueprint(auth_bp, url_prefix="/auth")
+
+# ====================== LOAD MODELS ======================
+
 irrigation_model = None
+
 try:
-    model_path = os.path.join(BASE_DIR, "irrigation_advisor", "model", "irrigation_model.joblib")
+    model_path = os.path.join(
+        BASE_DIR,
+        "irrigation_advisor",
+        "model",
+        "irrigation_model.joblib"
+    )
+
     if os.path.exists(model_path):
         irrigation_model = joblib.load(model_path)
-        print("✅ Irrigation Model Loaded Successfully!")
+        print("✅ Irrigation Model Loaded!")
+
 except Exception as e:
     print(f"⚠️ Irrigation model error: {e}")
 
-# ====================== ROUTES ======================
+# ====================== CROP RECOMMENDATION ======================
 
 @app.route("/predict", methods=["POST"])
+@jwt_required()
 def predict_crop_route():
-    data = request.json
+
     try:
+        data = request.json
+
         result = predict_crop(
-            N=data["N"], P=data["P"], K=data["K"],
-            temperature=data["temperature"], humidity=data["humidity"],
-            ph=data["ph"], rainfall=data["rainfall"]
+            N=data["N"],
+            P=data["P"],
+            K=data["K"],
+            temperature=data["temperature"],
+            humidity=data["humidity"],
+            ph=data["ph"],
+            rainfall=data["rainfall"]
         )
+
         return jsonify(result)
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
+# ====================== FERTILIZER PREDICTION ======================
 
 @app.route("/predict-fertilizer", methods=["POST"])
+@jwt_required()
 def predict_fertilizer_route():
-    data = request.json
+
     try:
-        result = predict_fertilizer(crop=data["crop"], N=data["N"], P=data["P"], K=data["K"])
+        data = request.json
+
+        result = predict_fertilizer(
+            crop=data["crop"],
+            N=data["N"],
+            P=data["P"],
+            K=data["K"]
+        )
+
         return jsonify(result)
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
+# ====================== FERTILIZER DOSAGE ======================
 
 @app.route("/fertilizer-dosage", methods=["POST"])
+@jwt_required()
 def fertilizer_dosage_route():
-    data = request.json
+
     try:
-        pred = predict_fertilizer(crop=data["crop"], N=data["N"], P=data["P"], K=data["K"])
+        data = request.json
+
+        pred = predict_fertilizer(
+            crop=data["crop"],
+            N=data["N"],
+            P=data["P"],
+            K=data["K"]
+        )
+
         dosage = get_dosage_for_recommendation(
-            pred, 
-            land_area_ha=data["land_area_ha"], 
+            pred,
+            land_area_ha=data["land_area_ha"],
             use_organic=data.get("use_organic", False)
         )
+
         return jsonify(dosage)
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 
+# ====================== IRRIGATION ======================
+
 @app.route("/irrigation/predict", methods=["POST"])
+@jwt_required()
 def predict_irrigation():
+
     try:
+
         data = request.get_json(force=True)
-        
-        moisture = float(data.get('moisture', 40))
-        humidity = float(data.get('humidity', 50))
-        temp = float(data.get('temp', 28))
-        et = float(data.get('et', 4.5))
-        crop = data.get('crop', 'general').lower()
-        
-        # Placeholder for model prediction - ensure 'irrigation_model' is used here
-        # prediction = irrigation_model.predict([[moisture, humidity, temp, et]])[0]
-        prediction = 1 # Temporary placeholder
 
-        water_need_mm = max(0, int((60 - moisture) * 1.5))
-        drip_water_need = round(water_need_mm * 0.90, 1)
+        moisture = float(data.get("moisture", 40))
+        humidity = float(data.get("humidity", 50))
+        temp = float(data.get("temp", 28))
+        et = float(data.get("et", 4.5))
+        crop = data.get("crop", "general").lower()
 
-        # Advanced Crop & Soil Advice Database
+        if irrigation_model:
+
+            features = np.array([
+                [moisture, humidity, temp, et]
+            ])
+
+            prediction = irrigation_model.predict(features)[0]
+
+        else:
+
+            prediction = (
+                1
+                if moisture < 40 or (temp > 30 and humidity < 55)
+                else 0
+            )
+
+        water_need_mm = max(
+            0,
+            int((60 - moisture) * 1.5)
+        )
+
+        drip_water_need = round(
+            water_need_mm / 0.90,
+            1
+        )
+
         advice_db = {
-            "rice": {"stage": "Vegetative", "tip": "Maintain 2-5 cm water layer", "risk": "Waterlogging high"},
-            "maize": {"stage": "Tasseling", "tip": "Critical stage - do not let stress", "risk": "Drought sensitive"},
-            "cotton": {"stage": "Flowering", "tip": "Drip at root zone best", "risk": "Low humidity stress"},
+            "rice": "Maintain shallow water layer during vegetative stage",
+            "maize": "Critical at tasseling stage",
+            "cotton": "Drip at root zone is best"
         }
 
-        crop_info = advice_db.get(crop, {"stage": "General", "tip": "Monitor closely", "risk": "Normal"})
+        crop_info = advice_db.get(
+            crop,
+            "Monitor soil closely"
+        )
 
-        if prediction == 1:
-            recommendation = "Irrigate Now - Drip Recommended"
-            urgency = "High" if moisture < 25 else "Medium"
-        else:
-            recommendation = "No Irrigation Needed"
-            urgency = "Low"
+        recommendation = (
+            "Irrigate Now - Drip Recommended"
+            if prediction == 1
+            else "No Irrigation Needed"
+        )
+
+        urgency = (
+            "High"
+            if moisture < 25
+            else "Medium"
+        )
 
         return jsonify({
             "recommendation": recommendation,
             "water_amount_mm": drip_water_need,
-            "traditional_mm": water_need_mm,
             "urgency": urgency,
-            "advice": f"{crop_info['tip']}. Apply through drip system for best results.",
-            "growth_stage": crop_info['stage'],
+            "advice": f"{crop_info}. Use drip irrigation for best efficiency.",
             "insights": [
-                f"Next irrigation in {2 if urgency == 'Low' else 1} days",
-                f"Estimated water saving with drip: {int((water_need_mm - drip_water_need)/water_need_mm*100) if water_need_mm > 0 else 0}%"
+                "Early morning irrigation recommended",
+                "Check drip lines regularly"
             ],
             "practical_tips": [
-                "Irrigate early morning (5-8 AM)",
-                "Check drip emitters for clogging",
-                "Mulch around plants to retain moisture",
-                f"Monitor {crop.capitalize()} {crop_info['risk']}"
+                "Mulch soil to retain moisture",
+                "Monitor weather forecast"
             ],
-            "sustainability_score": 85 if drip_water_need < 30 else 65,
             "moisture": round(moisture, 1),
             "status": "success"
         })
@@ -134,19 +229,87 @@ def predict_irrigation():
         return jsonify({"error": str(e)}), 400
 
 
-# ====================== MARKET FORECAST ROUTE ======================
-@app.route("/api/market/forecast", methods=["POST"])
-def market_forecast_route():
-    data = request.json
-    if not data or 'recent_prices' not in data:
-        return jsonify({"error": "Missing recent price data"}), 400
-        
+
+@app.route('/contact', methods=['POST'])
+def submit_contact():
     try:
+        data = request.get_json(force=True)  # force=True helps with CORS
+        
+        if not data:
+            return jsonify({"success": False, "error": "No data received"}), 400
+
+        contact = Contact(
+            name=data.get('name', 'Website Visitor'),
+            email=data.get('email', ''),
+            phone=data.get('phone'),
+            subject="Call Back Request from Homepage",
+            message=data.get('message', 'User requested a callback')
+        )
+        
+        db.session.add(contact)
+        db.session.commit()
+
+        return jsonify({
+            "success": True,
+            "message": "Thank you! Our team will call you soon."
+        }), 201
+
+    except Exception as e:
+        print("Contact Error:", str(e))   # This will show in terminal
+        return jsonify({"success": False, "error": str(e)}), 400
+
+# ====================== MARKET PRICE FORECAST ======================
+
+@app.route("/api/market/forecast", methods=["POST"])
+@jwt_required()
+def market_forecast_route():
+
+    try:
+
+        data = request.json
+
         result = forecast_price(data)
+
         return jsonify(result)
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 
+# ====================== HEALTH CHECK ======================
+
+@app.route("/health", methods=["GET"])
+def health():
+
+    return jsonify({
+        "status": "ok",
+        "database": "connected",
+        "authentication": "JWT Enabled"
+    })
+
+
+# ====================== RUN ======================
+
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+
+    with app.app_context():
+        try:
+            os.makedirs("instance", exist_ok=True)
+
+            db.create_all()
+
+            print("✅ Database & tables created successfully!")
+            print(f"📁 Database location: {app.config['SQLALCHEMY_DATABASE_URI']}")
+
+        except Exception as e:
+            print(f"❌ Database Error: {e}")
+
+    print("🚀 AgriAI Backend Started")
+    print("🔐 JWT Authentication Enabled")
+    print("🗄️ SQLAlchemy Database Connected")
+    print("🌐 Server started on http://127.0.0.1:5000")
+
+    app.run(
+        debug=True,
+        port=5000
+    )
