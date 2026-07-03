@@ -325,5 +325,38 @@
     "movementDown": "AI मूल्य में गिरावट की भविष्यवाणी करता है। पहले बेचने से रिटर्न अधिकतम करने में मदद मिल सकती है।",
     "roadmapTitle": "कवरेज रोडमैप",
     "roadmapSubtitle": "एक मंडी से भारत के हर ग्रामीण बाजार तक।"
+  },
+  "dashboard": {
+    "good_morning": "सुबह बख़ैर, किसान",
+    "demo_view": "प्लेटफ़ॉर्म ओवरव्यू — डेमो व्यू",
+    "weather": "आज का मौसम",
+    "weather_note": "लाइव डेटा उत्पादन में IMD मौसम API से जुड़ता है",
+    "alerts": "स्मार्ट अलर्ट",
+    "modules": "प्लेटफ़ॉर्म मॉड्यूल्स",
+    "price_trends": "फसल मूल्य रुझान",
+    "simulated_data": "सिमुलेटेड डेटा",
+    "price_note": "उदाहरण ₹/क्विंटल मूल्य — लाइव मॉडल Agmarknet मंडी मूल्य API से जुड़ता है",
+    "goals": "प्लेटफ़ॉर्म लक्ष्य और अनुमानित प्रभाव"
+  },
+  "common": {
+    "live": "लाइव",
+    "coming_soon": "जल्द आ रहा है",
+    "open": "खोलें"
+  },
+  "modules": {
+    "crop_recommendation": "फसल सिफारिश",
+    "crop_recommendation_desc": "अपनी मिट्टी के लिए AI-संचालित फसल सुझाव प्राप्त करें।",
+    "fertilizer_advisor": "उर्वरक सलाहकार",
+    "fertilizer_advisor_desc": "पोषक तत्वों को अनुकूलित करें और इनपुट लागत कम करें।",
+    "irrigation_advisor": "सिंचाई सलाहकार",
+    "irrigation_advisor_desc": "मिट्टी की नमी के आधार पर पानी देने का शेड्यूल बनाएं।",
+    "price_forecaster": "मूल्य पूर्वानुमान",
+    "price_forecaster_desc": "LSTM-आधारित बाजार मूल्य पूर्वानुमान।",
+    "disease_detection": "रोग पहचान",
+    "disease_detection_desc": "पत्ती की छवि अपलोड करें और तुरंत AI निदान प्राप्त करें।",
+    "farm_records": "फार्म रिकॉर्ड",
+    "farm_records_desc": "सुरक्षित, ब्लॉकचेन-रेडी दस्तावेज़ीकरण।",
+    "voice_assistant": "वॉइस असिस्टेंट",
+    "voice_assistant_desc": "मल्टीलिंगुअल हैंड्स-फ्री कृषि सहायता।"
   }
 }

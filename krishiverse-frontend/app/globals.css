@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 70 60% 98%; /* Light cream background */
+    --foreground: 140 50% 10%; /* Deep dark green text */
+    --primary: 145 63% 30%; /* Brand green */
+    --primary-foreground: 0 0% 100%;
+    /* Add other shadcn theme variables here as needed */
+  }
+}
+
+body {
+  @apply bg-background text-foreground;
+  font-family: 'Inter', sans-serif;
+}
