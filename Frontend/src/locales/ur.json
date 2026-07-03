@@ -1,0 +1,13 @@
+{
+  "nav": {
+    "home": "ہوم",
+    "dashboard": "ڈیش بورڈ",
+    "disease_ai": "بیماری AI",
+    "crop_prediction": "فصل کی پیش گوئی",
+    "profile": "پروفائل",
+    "my_dashboard": "میرا ڈیش بورڈ",
+    "logout": "لاگ آؤٹ",
+    "login": "لاگ اِن",
+    "get_started": "شروع کریں"
+  }
+}

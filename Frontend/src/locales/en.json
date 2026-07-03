@@ -1,0 +1,13 @@
+{
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "disease_ai": "Disease AI",
+    "crop_prediction": "Crop Prediction",
+    "profile": "Profile",
+    "my_dashboard": "My Dashboard",
+    "logout": "Logout",
+    "login": "Login",
+    "get_started": "Get Started"
+  }
+}
