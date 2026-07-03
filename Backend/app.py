@@ -279,6 +279,7 @@ def health():
 
     return jsonify({
         "status": "ok",
+        "cors_test": "this is new deploy",
         "database": "connected",
         "authentication": "JWT Enabled"
     })
