@@ -1,48 +1,51 @@
 import { motion } from 'framer-motion';
-
-const steps = [
-  {
-    title: "Create Your Farm Profile",
-    desc: "Register with your phone number. Add your land area, location, and soil type to get started."
-  },
-  {
-    title: "Analyse Your Soil",
-    desc: "Enter your soil's N-P-K values and pH. KrishiMitra calibrates every recommendation to your actual field conditions."
-  },
-  {
-    title: "Get Your Crop Recommendation",
-    desc: "Our AI suggests the best crop for your soil, climate, and season — with a confidence score and expected yield."
-  },
-  {
-    title: "Plan Your Fertilizer",
-    desc: "Know exactly which fertilizer to use, how much, and whether to go chemical or organic — calculated for your field size."
-  },
-  {
-    title: "Schedule Irrigation",
-    desc: "Get a watering schedule based on your crop's needs, local weather, and soil moisture levels."
-  },
-  {
-    title: "Monitor Crop Health",
-    desc: "Upload a photo of your crop or leaf. AI detects diseases, pests, and nutrient deficiencies early — before they spread."
-  },
-  {
-    title: "Track Market Prices",
-    desc: "See today's mandi prices and AI forecasts for the next 24 hours. Know the best time to sell before you leave the farm."
-  },
-  {
-    title: "Sell & Track Your Harvest",
-    desc: "Connect directly with buyers, FPOs, and mandis. Track your shipment and get paid — no middlemen."
-  }
-];
+import { useTranslation } from 'react-i18next';
 
 export default function Workflow() {
+  const { t } = useTranslation();
+
+  const steps = [
+    {
+      title: t("workflow.step1Title"),
+      desc: t("workflow.step1Desc")
+    },
+    {
+      title: t("workflow.step2Title"),
+      desc: t("workflow.step2Desc")
+    },
+    {
+      title: t("workflow.step3Title"),
+      desc: t("workflow.step3Desc")
+    },
+    {
+      title: t("workflow.step4Title"),
+      desc: t("workflow.step4Desc")
+    },
+    {
+      title: t("workflow.step5Title"),
+      desc: t("workflow.step5Desc")
+    },
+    {
+      title: t("workflow.step6Title"),
+      desc: t("workflow.step6Desc")
+    },
+    {
+      title: t("workflow.step7Title"),
+      desc: t("workflow.step7Desc")
+    },
+    {
+      title: t("workflow.step8Title"),
+      desc: t("workflow.step8Desc")
+    }
+  ];
+
   return (
     <section className="py-24 px-6 max-w-5xl mx-auto transition-colors duration-300">
       <h2 className="text-4xl font-black text-center mb-4 text-gray-900 dark:text-white">
-        The Intelligent Farm Journey
+        {t("workflow.title")}
       </h2>
       <p className="text-center text-gray-500 dark:text-gray-400 mb-16 max-w-xl mx-auto">
-        From soil analysis to market sale — KrishiMitra guides every step of your farming season.
+        {t("workflow.subtitle")}
       </p>
 
       <div className="relative">

@@ -1,24 +1,28 @@
+import { useTranslation } from "react-i18next";
+
 export default function Stats() {
+  const { t } = useTranslation();
+
   const stats = [
     {
-      tag: "Goal",
+      tag: t("stats.goal"),
       value: "100K+",
-      label: "Farmers Impacted",
+      label: t("stats.goalLabel"),
     },
     {
-      tag: "Vision",
+      tag: t("stats.vision"),
       value: "95%",
-      label: "Detection Goal",
+      label: t("stats.visionLabel"),
     },
     {
-      tag: "Target",
+      tag: t("stats.target"),
       value: "30%",
-      label: "Water Savings",
+      label: t("stats.targetLabel"),
     },
     {
-      tag: "Mission",
+      tag: t("stats.mission"),
       value: "∞",
-      label: "Innovation Ahead",
+      label: t("stats.missionLabel"),
     },
   ];
 
@@ -55,7 +59,7 @@ export default function Stats() {
         </div>
 
         <p className="mt-10 text-center text-xs text-emerald-100/70">
-          Visionary goals for AgriAI's long-term roadmap — not current deployment metrics.
+          {t("stats.footer")}
         </p>
       </div>
     </section>

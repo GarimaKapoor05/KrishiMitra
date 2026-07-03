@@ -1,37 +1,40 @@
 import { Leaf } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-
-const sections = [
-  {
-    title: "Product",
-    links: [
-      { label: "Crop Prediction", to: "/crop-prediction" },
-      { label: "Market Price Prediction", to: "/features/price-prediction" },
-      { label: "Smart Irrigation", to: "/features/irrigation" },
-      { label: "Fertilizer Recommendation", to: "/fertilizer-prediction" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { label: "About", to: "/about" },
-      { label: "Careers", to: "/careers" },
-      { label: "Press", to: "/press" },
-      { label: "Contact", to: "/contact" },
-    ],
-  },
-  {
-    title: "Sustainability",
-    links: [
-      { label: "Carbon Reports", to: "/carbon-reports" },
-      { label: "Climate Action", to: "/climate-action" },
-      { label: "Partner Farms", to: "/partner-farms" },
-    ],
-  },
-];
+import { useTranslation } from "react-i18next";
 
 export default function Footer() {
+  const { t } = useTranslation();
+
+  const sections = [
+    {
+      title: t("footer.product"),
+      links: [
+        { label: t("nav.crop_prediction"), to: "/crop-prediction" },
+        { label: t("exploreFeatures.f2Title"), to: "/features/price-prediction" },
+        { label: t("exploreFeatures.f4Title"), to: "/features/irrigation" },
+        { label: t("exploreFeatures.f3Title"), to: "/fertilizer-prediction" },
+      ],
+    },
+    {
+      title: t("footer.company"),
+      links: [
+        { label: t("footer.about"), to: "/about" },
+        { label: t("footer.careers"), to: "/careers" },
+        { label: t("footer.press"), to: "/press" },
+        { label: t("footer.contact"), to: "/contact" },
+      ],
+    },
+    {
+      title: t("footer.sustainability"),
+      links: [
+        { label: t("footer.carbonReports"), to: "/carbon-reports" },
+        { label: t("footer.climateAction"), to: "/climate-action" },
+        { label: t("footer.partnerFarms"), to: "/partner-farms" },
+      ],
+    },
+  ];
+
   return (
     <footer className="bg-white dark:bg-gray-900 py-16 px-6 border-t border-gray-100 dark:border-gray-700 transition-colors">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
@@ -47,7 +50,7 @@ export default function Footer() {
           </Link>
 
           <p className="text-gray-500 dark:text-gray-400">
-            Sustainable farming, powered by AI — from seed to harvest.
+            {t("footer.desc")}
           </p>
         </div>
 
@@ -79,7 +82,7 @@ export default function Footer() {
         whileInView={{ opacity: 1 }}
         className="max-w-7xl mx-auto mt-16 pt-8 border-t border-gray-100 dark:border-gray-700 text-center text-gray-400 dark:text-gray-500"
       >
-        © 2026 KrishiMitra • Built for a greener tomorrow 🌿
+        {t("footer.copyright")}
       </motion.div>
     </footer>
   );

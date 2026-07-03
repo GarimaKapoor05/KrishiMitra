@@ -1,22 +1,25 @@
 import { motion } from 'framer-motion';
-
-const features = [
-  { title: "Crop Recommendation", desc: "AI-powered crop suggestions based on your soil, climate, and season.", link: "/crop-prediction" },
-  { title: "Market Price Prediction", desc: "LSTM-powered forecasting for maximum harvest ROI.", link: "/features/price-prediction" },
-  { title: "Fertilizer Recommendation", desc: "AI-optimized nutrient balancing for soil health.", link: "/fertilizer-prediction" },
-  { title: "Smart Irrigation Advisor", desc: "Hyper-local weather & moisture-based control.", link: "/features/irrigation" },
-  { title: "Crop Health Monitoring", desc: "Upload a leaf photo — AI detects diseases and pests instantly.", link: "/features/health-monitor" },
-  { title: "Digital Farm Record", desc: "Secure, blockchain-ready farm documentation.", link: "/features/records" },
-  { title: "AI Voice Assistant", desc: "Multilingual, hands-free farming support.", link: "/features/voice-assistant" },
-  { title: "Crop Calendar & Task Planner", desc: "AI-generated sowing, irrigation, and harvest schedule for your entire season — with smart reminders.", link: "/features/calendar" },
-  { title: "Government Scheme Advisor", desc: "Discover PM-KISAN, crop insurance, and state subsidies you're eligible for — matched to your farm profile.", link: "/features/schemes" },
-];
+import { useTranslation } from 'react-i18next';
 
 export default function ExploreFeatures() {
+  const { t } = useTranslation();
+
+  const features = [
+    { title: t("exploreFeatures.f1Title"), desc: t("exploreFeatures.f1Desc"), link: "/crop-prediction" },
+    { title: t("exploreFeatures.f2Title"), desc: t("exploreFeatures.f2Desc"), link: "/features/price-prediction" },
+    { title: t("exploreFeatures.f3Title"), desc: t("exploreFeatures.f3Desc"), link: "/fertilizer-prediction" },
+    { title: t("exploreFeatures.f4Title"), desc: t("exploreFeatures.f4Desc"), link: "/features/irrigation" },
+    { title: t("exploreFeatures.f5Title"), desc: t("exploreFeatures.f5Desc"), link: "/features/health-monitor" },
+    { title: t("exploreFeatures.f6Title"), desc: t("exploreFeatures.f6Desc"), link: "/features/records" },
+    { title: t("exploreFeatures.f7Title"), desc: t("exploreFeatures.f7Desc"), link: "/features/voice-assistant" },
+    { title: t("exploreFeatures.f8Title"), desc: t("exploreFeatures.f8Desc"), link: "/features/calendar" },
+    { title: t("exploreFeatures.f9Title"), desc: t("exploreFeatures.f9Desc"), link: "/features/schemes" },
+  ];
+
   return (
     // Added id="capabilities" to allow navigation to this section
     <section id="capabilities" className="py-24 px-6 max-w-7xl mx-auto">
-      <h2 className="text-4xl font-black text-center text-gray-900 dark:text-white mb-16">Platform Capabilities</h2>
+      <h2 className="text-4xl font-black text-center text-gray-900 dark:text-white mb-16">{t("exploreFeatures.title")}</h2>
       <div className="grid md:grid-cols-3 gap-8">
         {features.map((f, i) => (
           <motion.a
@@ -30,7 +33,7 @@ export default function ExploreFeatures() {
             </div>
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-brand-green transition">{f.title}</h3>
             <p className="text-gray-500 dark:text-gray-400 mb-6">{f.desc}</p>
-            <span className="text-brand-green dark:text-emerald-400 font-bold text-sm">Explore →</span>
+            <span className="text-brand-green dark:text-emerald-400 font-bold text-sm">{t("exploreFeatures.explore")} →</span>
           </motion.a>
         ))}
       </div>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Upload,
   Loader2,
@@ -10,6 +11,8 @@ import {
 } from "lucide-react";
 
 export default function DiseaseDetection() {
+  const { t } = useTranslation();
+
   const [selectedImage, setSelectedImage] = useState(null);
   const [preview, setPreview] = useState(null);
 
@@ -31,7 +34,7 @@ export default function DiseaseDetection() {
 
   const handleSubmit = async () => {
     if (!selectedImage) {
-      setError("Please upload a crop leaf image first.");
+      setError(t("diseaseDetection.alertUpload"));
       return;
     }
 
@@ -61,12 +64,11 @@ export default function DiseaseDetection() {
           </div>
 
           <h1 className="text-5xl font-bold tracking-tight text-emerald-950 dark:text-white">
-            AI Crop Disease Detection
+            {t("diseaseDetection.title")}
           </h1>
 
           <p className="mt-4 text-lg text-emerald-700 dark:text-gray-300 max-w-2xl mx-auto leading-8">
-            Upload a crop leaf image and let KrishiMitra identify diseases
-            using deep learning in just a few seconds.
+            {t("diseaseDetection.desc")}
           </p>
 
         </div>
@@ -78,11 +80,11 @@ export default function DiseaseDetection() {
           <div className="mb-8">
 
             <h2 className="text-2xl font-semibold text-emerald-900 dark:text-white">
-              Upload Crop Leaf
+              {t("diseaseDetection.uploadLeaf")}
             </h2>
 
             <p className="mt-2 text-emerald-600 dark:text-gray-400">
-              Supported formats: JPG, JPEG, PNG
+              {t("diseaseDetection.formats")}
             </p>
 
           </div>
@@ -101,11 +103,11 @@ export default function DiseaseDetection() {
               <Upload className="w-12 h-12 text-emerald-500 dark:text-emerald-400 mx-auto mb-5" />
 
               <h3 className="text-xl font-semibold text-emerald-900 dark:text-white">
-                Click to upload a leaf image
+                {t("diseaseDetection.clickUpload")}
               </h3>
 
               <p className="text-emerald-600 dark:text-gray-400 mt-2">
-                Drag & drop is optional — click anywhere in this area.
+                {t("diseaseDetection.dragDrop")}
               </p>
 
             </div>
@@ -137,12 +139,12 @@ export default function DiseaseDetection() {
             {loading ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                Analyzing Leaf...
+                {t("diseaseDetection.analyzing")}
               </>
             ) : (
               <>
                 <Sparkles className="w-5 h-5" />
-                Analyze Leaf
+                {t("diseaseDetection.btnPredict")}
               </>
             )}
           </button>
@@ -178,11 +180,11 @@ export default function DiseaseDetection() {
 
                 <h2 className="text-2xl font-bold text-emerald-950 dark:text-white flex items-center gap-2">
                   <Sparkles className="w-6 h-6 text-emerald-600" />
-                  AI Diagnosis
+                  {t("diseaseDetection.diagnosis")}
                 </h2>
 
                 <p className="text-emerald-600 dark:text-gray-400 mt-1">
-                  Generated using the uploaded crop leaf image.
+                  {t("diseaseDetection.diagnosisDesc")}
                 </p>
 
               </div>
@@ -191,7 +193,7 @@ export default function DiseaseDetection() {
 
                 <ShieldCheck className="w-5 h-5" />
 
-                AI Verified
+                {t("diseaseDetection.aiVerified")}
 
               </span>
 
@@ -212,7 +214,7 @@ export default function DiseaseDetection() {
                 </h3>
 
                 <p className="text-emerald-600 dark:text-gray-400 mt-3">
-                  AI-powered disease classification based on the uploaded leaf image.
+                  {t("diseaseDetection.recDesc")}
                 </p>
 
               </div>
@@ -224,7 +226,7 @@ export default function DiseaseDetection() {
                 <div className="rounded-2xl border border-emerald-100 dark:border-emerald-900/30 bg-emerald-50 dark:bg-emerald-900/20 p-6">
 
                   <p className="text-sm text-emerald-700 dark:text-emerald-300 mb-2">
-                    Confidence
+                    {t("diseaseDetection.confidence")}
                   </p>
 
                   <h4 className="text-3xl font-bold text-emerald-950 dark:text-white">
@@ -236,7 +238,7 @@ export default function DiseaseDetection() {
                 <div className="rounded-2xl border border-sky-100 dark:border-sky-900/30 bg-sky-50 dark:bg-sky-900/20 p-6">
 
                   <p className="text-sm text-sky-700 dark:text-sky-300 mb-2">
-                    Health Score
+                    {t("diseaseDetection.healthScore")}
                   </p>
 
                   <h4 className="text-3xl font-bold text-sky-900 dark:text-white">
@@ -248,7 +250,7 @@ export default function DiseaseDetection() {
                 <div className="rounded-2xl border border-amber-100 dark:border-amber-900/30 bg-amber-50 dark:bg-amber-900/20 p-6">
 
                   <p className="text-sm text-amber-700 dark:text-amber-300 mb-2">
-                    Risk Level
+                    {t("diseaseDetection.riskLevel")}
                   </p>
 
                   <h4 className="text-3xl font-bold text-amber-900 dark:text-white">
@@ -264,7 +266,7 @@ export default function DiseaseDetection() {
 
                 <h4 className="text-xl font-semibold text-emerald-950 dark:text-white mb-4 flex items-center gap-2">
                   <Activity className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-                  Suggested Actions
+                  {t("diseaseDetection.actions")}
                 </h4>
 
                 <ul className="space-y-3 text-emerald-800 dark:text-gray-300">
@@ -295,7 +297,7 @@ export default function DiseaseDetection() {
                   className="inline-flex items-center gap-2 rounded-2xl border border-emerald-200 dark:border-emerald-700 px-6 py-3 text-emerald-700 hover:bg-emerald-50 dark:hover:bg-gray-800 transition-all"
                 >
                   <Upload className="w-5 h-5" />
-                  Analyze Another Image
+                  {t("diseaseDetection.btnAnother")}
                 </button>
 
               </div>

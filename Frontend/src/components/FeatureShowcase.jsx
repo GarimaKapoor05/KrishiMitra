@@ -1,18 +1,22 @@
+import { useTranslation } from "react-i18next";
+
 export default function FeatureShowcase() {
+  const { t } = useTranslation();
+
   const features = [
     {
-      title: "Smart Crop Advisor",
-      desc: "Matches your farm's unique soil profile with real-time global weather data to recommend the most profitable crop.",
+      title: t("featureShowcase.f1Title"),
+      desc: t("featureShowcase.f1Desc"),
       status: "live"
     },
     {
-      title: "Market Price Forecaster",
-      desc: "Utilizes historical price trends and seasonal data to tell you the perfect time to sell your harvest for maximum profit.",
+      title: t("featureShowcase.f2Title"),
+      desc: t("featureShowcase.f2Desc"),
       status: "live"
     },
     {
-      title: "Logistics Optimizer",
-      desc: "Connects your farm to the closest distribution centers, calculating the lowest transport cost and shortest delivery routes.",
+      title: t("featureShowcase.f3Title"),
+      desc: t("featureShowcase.f3Desc"),
       status: "coming"
     }
   ];
@@ -21,7 +25,7 @@ export default function FeatureShowcase() {
     <section className="py-24 bg-gray-50 dark:bg-gray-900 px-6 transition-colors">
       <div className="max-w-7xl mx-auto">
 
-        <h2 className="text-4xl font-black text-gray-900 dark:text-white mb-16">Intelligence-Driven Farming</h2>
+        <h2 className="text-4xl font-black text-gray-900 dark:text-white mb-16">{t("featureShowcase.title")}</h2>
 
         <div className="grid md:grid-cols-3 gap-8">
           {features.map((f, i) => (
@@ -32,13 +36,13 @@ export default function FeatureShowcase() {
 
               {f.status === "live" && (
                 <span className="text-xs font-semibold bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-2 py-0.5 rounded-full mb-4 inline-block">
-                  ✅ Live
+                  {t("featureShowcase.badgeLive")}
                 </span>
               )}
 
               {f.status === "coming" && (
                 <span className="text-xs font-semibold bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 px-2 py-0.5 rounded-full mb-4 inline-block">
-                  🔧 In Development
+                  {t("featureShowcase.badgeComing")}
                 </span>
               )}
 

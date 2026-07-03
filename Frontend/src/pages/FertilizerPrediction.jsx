@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { API_URL } from "../config";
+import { useTranslation } from "react-i18next";
 import {
   Sprout,
   FlaskConical,
@@ -19,10 +20,7 @@ const CROP_OPTIONS = [
 ];
 
 export default function FertilizerPrediction() {
-  // If navigated here from the Crop Prediction page (e.g. via a "Get
-  // Fertilizer Advice" button passing { crop, N, P, K } as route state),
-  // pre-fill the form with those values. Otherwise the page works fully
-  // standalone with manual entry.
+  const { t } = useTranslation();
   const location = useLocation();
   const prefill = location.state || {};
 
@@ -36,8 +34,6 @@ export default function FertilizerPrediction() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
 
-  // Step 2 (dosage) state — kept separate since it's only requested
-  // after the user sees the step-1 recommendation
   const [landArea, setLandArea] = useState("");
   const [useOrganic, setUseOrganic] = useState(false);
   const [dosageLoading, setDosageLoading] = useState(false);
@@ -76,7 +72,7 @@ export default function FertilizerPrediction() {
       console.log(data);
 
       if (!response.ok) {
-        alert(data.error || "Something went wrong.");
+        alert(data.error || t("fertilizerPrediction.errWrong"));
         setLoading(false);
         return;
       }
@@ -84,7 +80,7 @@ export default function FertilizerPrediction() {
       setResult(data);
     } catch (err) {
       console.error(err);
-      alert("Unable to connect to backend.");
+      alert(t("fertilizerPrediction.errBackend"));
     }
 
     setLoading(false);
@@ -92,7 +88,7 @@ export default function FertilizerPrediction() {
 
   const handleGetDosage = async () => {
     if (!landArea || Number(landArea) <= 0) {
-      alert("Please enter your land area in hectares.");
+      alert(t("fertilizerPrediction.alertArea"));
       return;
     }
 
@@ -120,7 +116,7 @@ export default function FertilizerPrediction() {
       console.log(data);
 
       if (!response.ok) {
-        alert(data.error || "Something went wrong.");
+        alert(data.error || t("fertilizerPrediction.errWrong"));
         setDosageLoading(false);
         return;
       }
@@ -128,7 +124,7 @@ export default function FertilizerPrediction() {
       setDosage(data);
     } catch (err) {
       console.error(err);
-      alert("Unable to connect to backend.");
+      alert(t("fertilizerPrediction.errBackend"));
     }
 
     setDosageLoading(false);
@@ -147,13 +143,11 @@ export default function FertilizerPrediction() {
           className="text-center mb-12"
         >
           <h1 className="text-5xl font-extrabold text-brand-green mb-4">
-            🌱 AI Fertilizer Prediction
+            {t("fertilizerPrediction.title")}
           </h1>
 
           <p className="text-gray-600 dark:text-gray-300 text-lg max-w-2xl mx-auto">
-            Select your crop and current soil nutrients.
-            Our AI model will tell you exactly what your soil needs,
-            with both chemical and organic fertilizer options.
+            {t("fertilizerPrediction.desc")}
           </p>
         </motion.div>
 
@@ -165,9 +159,10 @@ export default function FertilizerPrediction() {
         >
           <div className="grid md:grid-cols-2 gap-6">
 
+            {/* Crop Select */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 dark:text-gray-200 mb-2">
-                Crop
+                {t("fertilizerPrediction.crop")}
               </label>
 
               <div className="flex items-center border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-gray-900 dark:text-gray-100 focus-within:ring-2 focus-within:ring-green-500">
@@ -183,27 +178,28 @@ export default function FertilizerPrediction() {
                   <option
                     value=""
                     disabled
-                    className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                    className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                   >
-                    Select a crop
+                    {t("fertilizerPrediction.selectCrop")}
                   </option>
 
                   {CROP_OPTIONS.map((crop) => (
                     <option
                       key={crop}
                       value={crop}
-                      className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                      className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                     >
-                      {capitalize(crop)}
+                      {t(`crops.${crop}`, { defaultValue: capitalize(crop) })}
                     </option>
-                 ))}
+                  ))}
                 </select>
               </div>
             </div>
 
+            {/* N */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 dark:text-gray-200 mb-2">
-                Nitrogen (N) in soil
+                {t("fertilizerPrediction.fieldN")}
               </label>
 
               <div className="flex items-center border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-green-500">
@@ -215,16 +211,17 @@ export default function FertilizerPrediction() {
                   name="N"
                   value={formData.N}
                   onChange={handleChange}
-                  placeholder="e.g. 40"
+                  placeholder={t("fertilizerPrediction.placeholderN")}
                   required
                   className="w-full outline-none bg-transparent text-gray-900 dark:text-gray-100"
                 />
               </div>
             </div>
 
+            {/* P */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 dark:text-gray-200 mb-2">
-                Phosphorus (P) in soil
+                {t("fertilizerPrediction.fieldP")}
               </label>
 
               <div className="flex items-center border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-green-500">
@@ -236,16 +233,17 @@ export default function FertilizerPrediction() {
                   name="P"
                   value={formData.P}
                   onChange={handleChange}
-                  placeholder="e.g. 80"
+                  placeholder={t("fertilizerPrediction.placeholderP")}
                   required
                   className="w-full outline-none bg-transparent text-gray-900 dark:text-gray-100"
                 />
               </div>
             </div>
 
+            {/* K */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 dark:text-gray-200 mb-2">
-                Potassium (K) in soil
+                {t("fertilizerPrediction.fieldK")}
               </label>
 
               <div className="flex items-center border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-green-500">
@@ -257,7 +255,7 @@ export default function FertilizerPrediction() {
                   name="K"
                   value={formData.K}
                   onChange={handleChange}
-                  placeholder="e.g. 20"
+                  placeholder={t("fertilizerPrediction.placeholderK")}
                   required
                   className="w-full outline-none bg-transparent text-gray-900 dark:text-gray-100"
                 />
@@ -277,10 +275,10 @@ export default function FertilizerPrediction() {
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
                   <Loader2 className="animate-spin" size={20} />
-                  AI is analyzing...
+                  {t("fertilizerPrediction.analyzing")}
                 </span>
               ) : (
-                "🌱 Get Fertilizer Recommendation"
+                t("fertilizerPrediction.btnPredict")
               )}
 
             </button>
@@ -303,14 +301,14 @@ export default function FertilizerPrediction() {
             <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 p-8">
 
               <h2 className="text-2xl font-bold text-brand-green mb-6">
-                🌱 Soil Condition
+                {t("fertilizerPrediction.soilCondition")}
               </h2>
 
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
 
                 <div>
                   <p className="text-gray-500 dark:text-gray-400 mb-2">
-                    Detected Condition
+                    {t("fertilizerPrediction.detectedCondition")}
                   </p>
 
                   <h1 className="text-4xl font-extrabold text-green-700 dark:text-green-400">
@@ -320,7 +318,7 @@ export default function FertilizerPrediction() {
 
                 <div className="md:w-80">
                   <div className="flex justify-between mb-2">
-                    <span className="font-medium">Confidence</span>
+                    <span className="font-medium">{t("fertilizerPrediction.confidence")}</span>
                     <span className="font-bold text-green-700">
                       {result.confidence}%
                     </span>
@@ -350,26 +348,26 @@ export default function FertilizerPrediction() {
             <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 p-8">
 
               <h2 className="text-2xl font-bold mb-6">
-                📊 NPK Comparison
+                {t("fertilizerPrediction.npkComparison")}
               </h2>
 
               <div className="grid md:grid-cols-2 gap-8">
 
                 <div>
-                  <h3 className="font-bold text-lg mb-3">Ideal NPK</h3>
+                  <h3 className="font-bold text-lg mb-3">{t("fertilizerPrediction.idealNpk")}</h3>
                   <div className="space-y-2 text-gray-700 dark:text-gray-300">
-                    <p>Nitrogen : {result.ideal_npk.N}</p>
-                    <p>Phosphorus : {result.ideal_npk.P}</p>
-                    <p>Potassium : {result.ideal_npk.K}</p>
+                    <p>{t("fertilizerPrediction.nitrogen")} : {result.ideal_npk.N}</p>
+                    <p>{t("fertilizerPrediction.phosphorus")} : {result.ideal_npk.P}</p>
+                    <p>{t("fertilizerPrediction.potassium")} : {result.ideal_npk.K}</p>
                   </div>
                 </div>
 
                 <div>
-                  <h3 className="font-bold text-lg mb-3">Your Soil</h3>
+                  <h3 className="font-bold text-lg mb-3">{t("fertilizerPrediction.yourSoil")}</h3>
                   <div className="space-y-2 text-gray-700 dark:text-gray-300">
-                    <p>Nitrogen : {result.input_npk.N}</p>
-                    <p>Phosphorus : {result.input_npk.P}</p>
-                    <p>Potassium : {result.input_npk.K}</p>
+                    <p>{t("fertilizerPrediction.nitrogen")} : {result.input_npk.N}</p>
+                    <p>{t("fertilizerPrediction.phosphorus")} : {result.input_npk.P}</p>
+                    <p>{t("fertilizerPrediction.potassium")} : {result.input_npk.K}</p>
                   </div>
                 </div>
 
@@ -381,14 +379,14 @@ export default function FertilizerPrediction() {
             <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 p-8">
 
               <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
-                🧪 Recommended Fertilizer
+                {t("fertilizerPrediction.recFertilizer")}
               </h2>
 
               <div className="grid md:grid-cols-2 gap-6">
 
                 <div className="bg-green-50 dark:bg-green-900/20 border-l-4 border-green-600 dark:border-green-500 p-5 rounded-lg">
                   <p className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-1">
-                    Chemical Option
+                    {t("fertilizerPrediction.chemicalOpt")}
                   </p>
                   <p className="font-bold text-lg text-green-800 dark:text-green-300">
                     {result.chemical_fertilizer}
@@ -397,7 +395,7 @@ export default function FertilizerPrediction() {
 
                 <div className="bg-amber-50 dark:bg-amber-900/20 border-l-4 border-amber-600 dark:border-amber-500 p-5 rounded-lg">
                   <p className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-1 flex items-center gap-1">
-                    <Recycle size={14} /> Organic Alternative
+                    <Recycle size={14} /> {t("fertilizerPrediction.organicAlt")}
                   </p>
                   <p className="font-bold text-lg text-amber-800 dark:text-amber-300">
                     {result.organic_alternative}
@@ -411,7 +409,7 @@ export default function FertilizerPrediction() {
 
                 <h3 className="font-bold text-lg mb-4 flex items-center gap-2 text-gray-900 dark:text-white">
                   <Ruler size={20} className="text-green-600" />
-                  Want the exact quantity for your field?
+                  {t("fertilizerPrediction.quantityQuestion")}
                 </h3>
 
                 <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
@@ -422,7 +420,7 @@ export default function FertilizerPrediction() {
                       step="any"
                       value={landArea}
                       onChange={(e) => setLandArea(e.target.value)}
-                      placeholder="Land area (hectares)"
+                      placeholder={t("fertilizerPrediction.placeholderArea")}
                       className="w-full outline-none bg-transparent text-gray-900 dark:text-gray-100"
                     />
                   </div>
@@ -434,7 +432,7 @@ export default function FertilizerPrediction() {
                       onChange={(e) => setUseOrganic(e.target.checked)}
                       className="accent-green-600"
                     />
-                    Use organic alternative instead
+                    {t("fertilizerPrediction.checkOrganic")}
                   </label>
 
                   <button
@@ -446,10 +444,10 @@ export default function FertilizerPrediction() {
                     {dosageLoading ? (
                       <span className="flex items-center gap-2">
                         <Loader2 className="animate-spin" size={18} />
-                        Calculating...
+                        {t("fertilizerPrediction.calculating")}
                       </span>
                     ) : (
-                      "Calculate Dosage"
+                      t("fertilizerPrediction.btnCalculate")
                     )}
                   </button>
 
