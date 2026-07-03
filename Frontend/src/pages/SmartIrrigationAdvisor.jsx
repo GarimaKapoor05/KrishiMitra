@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { API_URL } from "../config";
 import {
   Droplets,
   Thermometer,
@@ -49,7 +50,7 @@ export default function SmartIrrigationAdvisor() {
       };
 
       const response = await fetch(
-        "http://127.0.0.1:5000/irrigation/predict",
+        `${API_URL}/irrigation/predict`,
         {
           method: "POST",
           headers: {

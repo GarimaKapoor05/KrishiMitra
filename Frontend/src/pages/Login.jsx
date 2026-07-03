@@ -1,6 +1,10 @@
 import { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
-import { Leaf, Mail, Lock } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Leaf, Mail, Lock, Loader2, ArrowRight } from 'lucide-react';
+import { API_URL } from "../config";
+
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -8,6 +12,7 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -15,97 +20,174 @@ function Login() {
     setError('');
 
     try {
-      const res = await fetch('http://127.0.0.1:5000/auth/login', {
+      const res = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await res.json();
+      let data = {};
+      try {
+        data = await res.json();
+      } catch {
+        data = {};
+      }
 
       if (res.ok) {
-        localStorage.setItem('token', data.access_token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        alert('Welcome back to KrishiMitra 🌱');
-        navigate('/dashboard');
+        login(data.access_token, data.user);
+        navigate('/user-dashboard', { replace: true });
       } else {
         setError(data.error || 'Invalid credentials');
       }
     } catch (err) {
-      setError('Unable to connect to server');
+      setError('Unable to connect to server. Please try again.');
     }
+
     setLoading(false);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 to-green-50 dark:from-gray-950 dark:to-emerald-950 p-4">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-10">
-          <div className="flex justify-center mb-4">
-            <div className="bg-green-600 text-white p-4 rounded-3xl">
-              <Leaf size={48} />
+    <div className="min-h-screen bg-[#FDFEFC] dark:bg-gray-950 flex items-center justify-center px-6 py-20">
+
+      {/* Background blobs — decorative, matches landing page feel */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-green-100 dark:bg-green-900/20 rounded-full blur-3xl opacity-60" />
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-emerald-100 dark:bg-emerald-900/20 rounded-full blur-3xl opacity-60" />
+      </div>
+
+      <div className="w-full max-w-md relative z-10">
+
+        {/* Logo */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-10"
+        >
+          <Link to="/" className="inline-flex flex-col items-center gap-3">
+            <div className="bg-brand-green text-white p-4 rounded-3xl shadow-lg">
+              <Leaf size={36} />
             </div>
-          </div>
-          <h1 className="text-4xl font-bold text-green-700 dark:text-green-500">KrishiMitra</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">Smart Farming, Better Future</p>
-        </div>
+            <h1 className="text-3xl font-extrabold text-brand-green">
+              KrishiMitra
+            </h1>
+          </Link>
+          <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm">
+            Smart Farming, Better Future
+          </p>
+        </motion.div>
 
-        <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl p-8 border border-green-100 dark:border-green-900">
-          <h2 className="text-3xl font-semibold text-center mb-8">Welcome Back</h2>
+        {/* Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="bg-white dark:bg-gray-900 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-800 p-10"
+        >
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+            Welcome back 👋
+          </h2>
+          <p className="text-gray-500 dark:text-gray-400 text-sm mb-8">
+            Log in to access your farm dashboard.
+          </p>
 
+          {/* Error */}
           {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-2xl mb-6">
-              {error}
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded-2xl mb-6 text-sm"
+            >
+              ⚠️ {error}
+            </motion.div>
           )}
 
-          <form onSubmit={handleLogin} className="space-y-6">
+          <form onSubmit={handleLogin} className="space-y-5">
+
+            {/* Email */}
             <div>
-              <div className="flex items-center gap-2 text-gray-600 mb-2">
-                <Mail size={20} />
-                <label>Email</label>
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                Email Address
+              </label>
+              <div className="flex items-center border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-brand-green dark:bg-gray-800 transition">
+                <Mail size={18} className="text-gray-400 mr-3 shrink-0" />
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="farmer@example.com"
+                  required
+                  className="w-full outline-none bg-transparent text-gray-900 dark:text-white placeholder-gray-400 text-sm"
+                />
               </div>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-5 py-4 border border-gray-300 dark:border-gray-700 rounded-2xl focus:outline-none focus:border-green-600 transition-colors"
-                placeholder="farmer@example.com"
-                required
-              />
             </div>
 
+            {/* Password */}
             <div>
-              <div className="flex items-center gap-2 text-gray-600 mb-2">
-                <Lock size={20} />
-                <label>Password</label>
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                Password
+              </label>
+              <div className="flex items-center border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-brand-green dark:bg-gray-800 transition">
+                <Lock size={18} className="text-gray-400 mr-3 shrink-0" />
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                  className="w-full outline-none bg-transparent text-gray-900 dark:text-white placeholder-gray-400 text-sm"
+                />
               </div>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-5 py-4 border border-gray-300 dark:border-gray-700 rounded-2xl focus:outline-none focus:border-green-600 transition-colors"
-                placeholder="••••••••"
-                required
-              />
             </div>
 
+            {/* Submit */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-2xl font-semibold text-lg transition-all duration-200 disabled:opacity-70"
+              className="w-full bg-brand-green hover:bg-green-700 text-white py-3.5 rounded-xl font-semibold text-sm transition-all duration-200 disabled:opacity-70 flex items-center justify-center gap-2 mt-2"
             >
-              {loading ? 'Logging in...' : 'Login to KrishiMitra'}
+              {loading ? (
+                <>
+                  <Loader2 size={18} className="animate-spin" />
+                  Logging in...
+                </>
+              ) : (
+                <>
+                  Login to KrishiMitra
+                  <ArrowRight size={16} />
+                </>
+              )}
             </button>
+
           </form>
 
-          <p className="text-center mt-8 text-gray-600 dark:text-gray-400">
+          <p className="text-center mt-8 text-sm text-gray-500 dark:text-gray-400">
             New to KrishiMitra?{' '}
-            <Link to="/register" className="text-green-600 font-semibold hover:underline">
-              Create Account
+            <Link
+              to="/register"
+              className="text-brand-green font-semibold hover:underline"
+            >
+              Create an account
             </Link>
           </p>
-        </div>
+
+        </motion.div>
+
+        {/* Back to home */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="text-center mt-6"
+        >
+          <Link
+            to="/"
+            className="text-sm text-gray-400 hover:text-brand-green transition"
+          >
+            ← Back to home
+          </Link>
+        </motion.div>
+
       </div>
     </div>
   );

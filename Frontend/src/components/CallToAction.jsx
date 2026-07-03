@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Send, MessageCircle, Phone, Leaf } from "lucide-react";
+import { API_URL } from "../config";
 
 export default function CallToAction() {
   const [formData, setFormData] = useState({
@@ -24,7 +25,7 @@ export default function CallToAction() {
     setMessage("");
 
     try {
-      const res = await fetch('http://127.0.0.1:5000/contact', {
+      const res = await fetch(`${API_URL}/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

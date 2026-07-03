@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
+import { API_URL } from "../config";
 import {
   Sprout,
   FlaskConical,
@@ -57,7 +58,7 @@ export default function FertilizerPrediction() {
     setDosage(null);
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/predict-fertilizer", {
+      const response = await fetch(`${API_URL}/predict-fertilizer`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -99,7 +100,7 @@ export default function FertilizerPrediction() {
     setDosage(null);
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/fertilizer-dosage", {
+      const response = await fetch(`${API_URL}/fertilizer-dosage`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

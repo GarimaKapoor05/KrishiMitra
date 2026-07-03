@@ -7,8 +7,7 @@ export default function ThemeSwitcher() {
 
   const themes = [
     { id: "light", name: "Light", icon: Sun },
-    { id: "dark", name: "Dark", icon: Moon },
-    { id: "colorblind", name: "Colorblind", icon: Monitor }
+    { id: "dark", name: "Dark", icon: Moon }
   ];
 
   return (

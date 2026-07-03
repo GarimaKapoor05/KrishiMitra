@@ -29,7 +29,7 @@ export default function MarketPricePrediction() {
         crop,
         recent_prices: [2100, 2110, 2130, 2125, 2140, 2160, 2155, 2170, 2180, 2190],
       };
-      const response = await fetch("http://127.0.0.1:5000/api/market/forecast", {
+      const response = await fetch(`${API_URL}/api/market/forecast`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

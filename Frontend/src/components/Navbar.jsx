@@ -1,49 +1,158 @@
-import { Leaf } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import {
+  Leaf,
+  User,
+  ChevronDown,
+  LayoutDashboard,
+  LogOut,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import ThemeSwitcher from "./ThemeSwitcher";
+import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
+  const { isLoggedIn, user, logout } = useAuth();
+
+  const [open, setOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <nav className="fixed w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        
+
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 font-bold text-xl text-gray-900 dark:text-white hover:text-brand-green dark:hover:text-emerald-400 transition" >
-          <Leaf className="text-brand-green dark:text-emerald-400 transition-colors" />
+        <Link
+          to="/"
+          className="flex items-center gap-2 font-bold text-xl text-gray-900 dark:text-white hover:text-brand-green dark:hover:text-emerald-400 transition"
+        >
+          <Leaf className="text-brand-green dark:text-emerald-400" />
           KrishiMitra
         </Link>
 
         {/* Navigation */}
         <div className="hidden md:flex gap-8 text-gray-600 dark:text-gray-300 font-medium">
-          <Link to="/" className="hover:text-brand-green dark:hover:text-emerald-400 transition">
+          <Link
+            to="/"
+            className="hover:text-brand-green dark:hover:text-emerald-400 transition"
+          >
             Home
           </Link>
 
-          <Link to="/dashboard" className="hover:text-brand-green dark:hover:text-emerald-400 transition">
+          <Link
+            to="/dashboard"
+            className="hover:text-brand-green dark:hover:text-emerald-400 transition"
+          >
             Dashboard
           </Link>
 
-          <Link to="/disease-ai" className="hover:text-brand-green dark:hover:text-emerald-400 transition">
+          <Link
+            to="/disease-ai"
+            className="hover:text-brand-green dark:hover:text-emerald-400 transition"
+          >
             Disease AI
           </Link>
 
           <Link
-            to="/crop-prediction" className="hover:text-brand-green dark:hover:text-emerald-400 transition"
+            to="/crop-prediction"
+            className="hover:text-brand-green dark:hover:text-emerald-400 transition"
           >
             Crop Prediction
           </Link>
         </div>
 
-        {/* Buttons */}
+        {/* Right Side */}
         <div className="flex items-center gap-3">
           <ThemeSwitcher />
-          <Link to="/login" className="font-medium text-gray-900 dark:text-white hover:text-brand-green dark:hover:text-emerald-400 transition" >
-            Sign in
-          </Link>
-          <Link to="/signup" className="bg-brand-green hover:bg-green-700 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white px-5 py-2 rounded-full font-semibold transition" >
-            Get started
-          </Link>
+
+          {isLoggedIn ? (
+            <div className="relative" ref={menuRef}>
+
+              <button
+                onClick={() => setOpen(!open)}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+              >
+                <User size={18} />
+                <span className="font-medium">Profile</span>
+
+                <ChevronDown
+                  size={16}
+                  className={`transition-transform duration-200 ${
+                    open ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {open && (
+                <div className="absolute right-0 mt-3 w-72 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl overflow-hidden">
+
+                  {/* User Info */}
+                  <div className="px-5 py-4 border-b border-gray-100 dark:border-gray-700">
+                    <h4 className="font-semibold text-gray-900 dark:text-white">
+                      {user?.name || "User"}
+                    </h4>
+
+                    <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
+                      {user?.email}
+                    </p>
+                  </div>
+
+                  {/* Dashboard */}
+                  <Link
+                    to="/user-dashboard"
+                    onClick={() => setOpen(false)}
+                    className="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition"
+                  >
+                    <LayoutDashboard size={18} />
+                    My Dashboard
+                  </Link>
+
+                  {/* Logout */}
+                  <button
+                    onClick={() => {
+                      setOpen(false);
+                      logout();
+                    }}
+                    className="w-full flex items-center gap-3 px-5 py-3 text-left text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition"
+                  >
+                    <LogOut size={18} />
+                    Logout
+                  </button>
+
+                </div>
+              )}
+            </div>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="font-medium text-gray-900 dark:text-white hover:text-brand-green dark:hover:text-emerald-400 transition"
+              >
+                Login
+              </Link>
+
+              <Link
+                to="/register"
+                className="bg-brand-green hover:bg-green-700 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white px-5 py-2 rounded-full font-semibold transition"
+              >
+                Get started
+              </Link>
+            </>
+          )}
         </div>
+
       </div>
     </nav>
   );

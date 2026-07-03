@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Leaf, Mail, Lock, User, Phone, MapPin, Tractor } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Leaf, Mail, Lock, User, Phone, MapPin, Tractor, Loader2, ArrowRight } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { API_URL } from "../config";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -14,6 +17,7 @@ function Register() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,7 +29,7 @@ function Register() {
     setError('');
 
     try {
-      const res = await fetch('http://127.0.0.1:5000/auth/register', {
+      const res = await fetch(`${API_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -34,154 +38,203 @@ function Register() {
       const data = await res.json();
 
       if (res.ok) {
-        alert('Account created successfully! 🌱 Please login.');
-        navigate('/login');
+        navigate('/user-dashboard', { replace: true });
       } else {
         setError(data.error || 'Registration failed');
       }
     } catch (err) {
-      setError('Unable to connect to server');
+      setError('Unable to connect to server. Please try again.');
     }
+
     setLoading(false);
   };
 
+  const fields = [
+    {
+      name: 'username',
+      label: 'Full Name',
+      type: 'text',
+      icon: User,
+      placeholder: 'Ramesh Patel',
+      required: true,
+      colSpan: 1,
+    },
+    {
+      name: 'email',
+      label: 'Email Address',
+      type: 'email',
+      icon: Mail,
+      placeholder: 'farmer@example.com',
+      required: true,
+      colSpan: 1,
+    },
+    {
+      name: 'password',
+      label: 'Password',
+      type: 'password',
+      icon: Lock,
+      placeholder: '••••••••',
+      required: true,
+      colSpan: 2,
+    },
+    {
+      name: 'phone',
+      label: 'Phone Number',
+      type: 'tel',
+      icon: Phone,
+      placeholder: '+91 98765 43210',
+      required: false,
+      colSpan: 1,
+    },
+    {
+      name: 'farm_size',
+      label: 'Farm Size (hectares)',
+      type: 'number',
+      icon: Tractor,
+      placeholder: '2.5',
+      required: false,
+      colSpan: 1,
+    },
+    {
+      name: 'location',
+      label: 'Village / Location',
+      type: 'text',
+      icon: MapPin,
+      placeholder: 'Village, District, State',
+      required: false,
+      colSpan: 2,
+    },
+  ];
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 to-green-50 dark:from-gray-950 dark:to-emerald-950 p-4">
-      <div className="w-full max-w-lg">
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <div className="bg-green-600 text-white p-4 rounded-3xl">
-              <Leaf size={48} />
+    <div className="min-h-screen bg-[#FDFEFC] dark:bg-gray-950 flex items-center justify-center px-6 py-20 relative">
+
+      {/* Background blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-green-100 dark:bg-green-900/20 rounded-full blur-3xl opacity-60" />
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-emerald-100 dark:bg-emerald-900/20 rounded-full blur-3xl opacity-60" />
+      </div>
+
+      <div className="w-full max-w-lg relative z-10">
+
+        {/* Logo */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-10"
+        >
+          <Link to="/" className="inline-flex flex-col items-center gap-3">
+            <div className="bg-brand-green text-white p-4 rounded-3xl shadow-lg">
+              <Leaf size={36} />
             </div>
-          </div>
-          <h1 className="text-4xl font-bold text-green-700 dark:text-green-500">KrishiMitra</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">Join the future of smart farming</p>
-        </div>
+            <h1 className="text-3xl font-extrabold text-brand-green">
+              KrishiMitra
+            </h1>
+          </Link>
+          <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm">
+            Join the future of smart farming
+          </p>
+        </motion.div>
 
-        <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl p-8 border border-green-100 dark:border-green-900">
-          <h2 className="text-3xl font-semibold text-center mb-8">Create Farmer Account</h2>
+        {/* Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="bg-white dark:bg-gray-900 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-800 p-10"
+        >
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+            Create your account 🌱
+          </h2>
+          <p className="text-gray-500 dark:text-gray-400 text-sm mb-8">
+            Set up your farmer profile to get started.
+          </p>
 
+          {/* Error */}
           {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-2xl mb-6">
-              {error}
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded-2xl mb-6 text-sm"
+            >
+              ⚠️ {error}
+            </motion.div>
           )}
 
-          <form onSubmit={handleRegister} className="space-y-5">
+          <form onSubmit={handleRegister}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div>
-                <div className="flex items-center gap-2 text-gray-600 mb-2">
-                  <User size={20} />
-                  <label>Full Name</label>
-                </div>
-                <input
-                  type="text"
-                  name="username"
-                  value={formData.username}
-                  onChange={handleChange}
-                  className="w-full px-5 py-4 border border-gray-300 dark:border-gray-700 rounded-2xl focus:outline-none focus:border-green-600"
-                  placeholder="Ramesh Patel"
-                  required
-                />
-              </div>
-
-              <div>
-                <div className="flex items-center gap-2 text-gray-600 mb-2">
-                  <Mail size={20} />
-                  <label>Email</label>
-                </div>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full px-5 py-4 border border-gray-300 dark:border-gray-700 rounded-2xl focus:outline-none focus:border-green-600"
-                  placeholder="farmer@example.com"
-                  required
-                />
-              </div>
+              {fields.map((field) => {
+                const Icon = field.icon;
+                return (
+                  <div
+                    key={field.name}
+                    className={field.colSpan === 2 ? 'md:col-span-2' : ''}
+                  >
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                      {field.label}
+                      {field.required && <span className="text-red-400 ml-1">*</span>}
+                    </label>
+                    <div className="flex items-center border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-brand-green dark:bg-gray-800 transition">
+                      <Icon size={18} className="text-gray-400 mr-3 shrink-0" />
+                      <input
+                        type={field.type}
+                        name={field.name}
+                        value={formData[field.name]}
+                        onChange={handleChange}
+                        placeholder={field.placeholder}
+                        required={field.required}
+                        step={field.name === 'farm_size' ? '0.1' : undefined}
+                        className="w-full outline-none bg-transparent text-gray-900 dark:text-white placeholder-gray-400 text-sm"
+                      />
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
-            <div>
-              <div className="flex items-center gap-2 text-gray-600 mb-2">
-                <Lock size={20} />
-                <label>Password</label>
-              </div>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full px-5 py-4 border border-gray-300 dark:border-gray-700 rounded-2xl focus:outline-none focus:border-green-600"
-                placeholder="Create strong password"
-                required
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div>
-                <div className="flex items-center gap-2 text-gray-600 mb-2">
-                  <Phone size={20} />
-                  <label>Phone Number</label>
-                </div>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="w-full px-5 py-4 border border-gray-300 dark:border-gray-700 rounded-2xl focus:outline-none focus:border-green-600"
-                  placeholder="98765 43210"
-                />
-              </div>
-
-              <div>
-                <div className="flex items-center gap-2 text-gray-600 mb-2">
-                  <Tractor size={20} />
-                  <label>Farm Size (hectares)</label>
-                </div>
-                <input
-                  type="number"
-                  name="farm_size"
-                  value={formData.farm_size}
-                  onChange={handleChange}
-                  className="w-full px-5 py-4 border border-gray-300 dark:border-gray-700 rounded-2xl focus:outline-none focus:border-green-600"
-                  placeholder="2.5"
-                  step="0.1"
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center gap-2 text-gray-600 mb-2">
-                <MapPin size={20} />
-                <label>Village / Location</label>
-              </div>
-              <input
-                type="text"
-                name="location"
-                value={formData.location}
-                onChange={handleChange}
-                className="w-full px-5 py-4 border border-gray-300 dark:border-gray-700 rounded-2xl focus:outline-none focus:border-green-600"
-                placeholder="Village, District, State"
-              />
-            </div>
-
+            {/* Submit */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-2xl font-semibold text-lg transition-all duration-200 disabled:opacity-70 mt-4"
+              className="w-full mt-8 bg-brand-green hover:bg-green-700 text-white py-3.5 rounded-xl font-semibold text-sm transition-all duration-200 disabled:opacity-70 flex items-center justify-center gap-2"
             >
-              {loading ? 'Creating Account...' : 'Create My Farmer Account'}
+              {loading ? (
+                <>
+                  <Loader2 size={18} className="animate-spin" />
+                  Creating Account...
+                </>
+              ) : (
+                <>
+                  Create My Farmer Account
+                  <ArrowRight size={16} />
+                </>
+              )}
             </button>
+
           </form>
 
-          <p className="text-center mt-8 text-gray-600 dark:text-gray-400">
+          <p className="text-center mt-8 text-sm text-gray-500 dark:text-gray-400">
             Already have an account?{' '}
-            <Link to="/login" className="text-green-600 font-medium hover:underline">
+            <Link to="/login" className="text-brand-green font-semibold hover:underline">
               Login here
             </Link>
           </p>
-        </div>
+
+        </motion.div>
+
+        {/* Back to home */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="text-center mt-6"
+        >
+          <Link to="/" className="text-sm text-gray-400 hover:text-brand-green transition">
+            ← Back to home
+          </Link>
+        </motion.div>
+
       </div>
     </div>
   );

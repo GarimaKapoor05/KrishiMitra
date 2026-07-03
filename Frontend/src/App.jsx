@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -22,6 +23,8 @@ import MarketPricePrediction from "./pages/MarketPricePrediction";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import UnderConstruction from "./pages/UnderConstruction";
+import UserDashboard from "./pages/UserDashboard";
 
 function Home() {
   return (
@@ -39,11 +42,6 @@ function Home() {
   );
 }
 
-// Protected Route Component
-const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem('token');
-  return token ? children : <Navigate to="/login" replace />;
-};
 
 function App() {
   return (
@@ -69,6 +67,18 @@ function App() {
         <Route path="/features/price-prediction" element={<MarketPricePrediction />} />
 
         {/* Coming Soon */}
+        <Route path="/user-dashboard" element={
+          <ProtectedRoute>
+            <UserDashboard />
+          </ProtectedRoute>
+        } />
+        <Route path="/about" element={<ComingSoon feature="ℹ️ About KrishiMitra" />} />
+        <Route path="/careers" element={<ComingSoon feature="💼 Careers" />} />
+        <Route path="/press" element={<ComingSoon feature="📰 Press" />} />
+        <Route path="/contact" element={<ComingSoon feature="📞 Contact Us" />} />
+        <Route path="/carbon-reports" element={<ComingSoon feature="🌱 Carbon Reports" />} />
+        <Route path="/climate-action" element={<ComingSoon feature="🌍 Climate Action" />} />
+        <Route path="/partner-farms" element={<ComingSoon feature="🚜 Partner Farms" />} />
         <Route path="/disease-ai" element={<ComingSoon feature="🔬 AI Disease Detection" />} />
         <Route path="/features/voice-assistant" element={<ComingSoon feature="🎙️ AI Voice Assistant" />} />
         <Route path="/features/health-monitor" element={<ComingSoon feature="🌿 Crop Health Monitoring" />} />
