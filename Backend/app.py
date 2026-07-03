@@ -72,7 +72,6 @@ except Exception as e:
 # ====================== CROP RECOMMENDATION ======================
 
 @app.route("/predict", methods=["POST"])
-@jwt_required()
 def predict_crop_route():
 
     try:
@@ -97,7 +96,6 @@ def predict_crop_route():
 # ====================== FERTILIZER PREDICTION ======================
 
 @app.route("/predict-fertilizer", methods=["POST"])
-@jwt_required()
 def predict_fertilizer_route():
 
     try:
@@ -119,7 +117,6 @@ def predict_fertilizer_route():
 # ====================== FERTILIZER DOSAGE ======================
 
 @app.route("/fertilizer-dosage", methods=["POST"])
-@jwt_required()
 def fertilizer_dosage_route():
 
     try:
@@ -147,7 +144,6 @@ def fertilizer_dosage_route():
 # ====================== IRRIGATION ======================
 
 @app.route("/irrigation/predict", methods=["POST"])
-@jwt_required()
 def predict_irrigation():
 
     try:
@@ -262,7 +258,6 @@ def submit_contact():
 # ====================== MARKET PRICE FORECAST ======================
 
 @app.route("/api/market/forecast", methods=["POST"])
-@jwt_required()
 def market_forecast_route():
 
     try:

@@ -45,10 +45,13 @@ export default function CropPrediction() {
     setResult(null);
 
     try {
+      const token = localStorage.getItem("token");
+
       const response = await fetch(`${API_URL}/predict`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           N: Number(formData.N),
