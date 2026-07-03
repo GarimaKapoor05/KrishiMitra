@@ -24,6 +24,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { useTranslation } from "react-i18next";
 
 // ── Sample data (clearly labeled as demo throughout) ──────────────────────────
 
@@ -38,50 +39,50 @@ const priceData = [
 
 const modules = [
   {
-    title: "Crop Recommendation",
-    desc: "Get AI-powered crop suggestions for your soil.",
+    titleKey: "crop_recommendation",
+    descKey: "crop_recommendation_desc",
     icon: Sprout,
     link: "/crop-prediction",
     status: "live",
   },
   {
-    title: "Fertilizer Advisor",
-    desc: "Optimize nutrients and reduce input costs.",
+    titleKey: "fertilizer_advisor",
+    descKey: "fertilizer_advisor_desc",
     icon: FlaskConical,
     link: "/fertilizer-prediction",
     status: "live",
   },
   {
-    title: "Irrigation Advisor",
-    desc: "Schedule watering based on soil moisture.",
+    titleKey: "irrigation_advisor",
+    descKey: "irrigation_advisor_desc",
     icon: Droplets,
     link: "/features/irrigation",
     status: "live",
   },
   {
-    title: "Price Forecaster",
-    desc: "LSTM-powered market price predictions.",
+    titleKey: "price_forecaster",
+    descKey: "price_forecaster_desc",
     icon: TrendingUp,
     link: "/features/price-prediction",
     status: "live",
   },
   {
-    title: "Disease Detection",
-    desc: "Upload a leaf image for instant AI diagnosis.",
+    titleKey: "disease_detection",
+    descKey: "disease_detection_desc",
     icon: Bug,
     link: "/disease-ai",
     status: "coming",
   },
   {
-    title: "Farm Records",
-    desc: "Secure, blockchain-ready documentation.",
+    titleKey: "farm_records",
+    descKey: "farm_records_desc",
     icon: BookOpen,
     link: "/features/records",
     status: "coming",
   },
   {
-    title: "Voice Assistant",
-    desc: "Hands-free multilingual farming support.",
+    titleKey: "voice_assistant",
+    descKey: "voice_assistant_desc",
     icon: Mic,
     link: "/features/voice-assistant",
     status: "coming",
@@ -91,23 +92,23 @@ const modules = [
 const alerts = [
   {
     type: "warning",
-    message: "Soil moisture dropping below optimal for wheat. Consider irrigation in next 48 hours.",
-    time: "2 hours ago",
+    messageKey: "alert_soil_moisture",
+    timeKey: "time_2_hours_ago",
   },
   {
     type: "info",
-    message: "Rice prices up 8.4% in Bhopal mandi this week — good time to plan harvest sale.",
-    time: "5 hours ago",
+    messageKey: "alert_rice_prices",
+    timeKey: "time_5_hours_ago",
   },
   {
     type: "success",
-    message: "Fertilizer application window open for maize crops in your region.",
-    time: "Yesterday",
+    messageKey: "alert_fertilizer_window",
+    timeKey: "time_yesterday",
   },
   {
     type: "warning",
-    message: "Light rainfall expected over next 3 days — delay pesticide application.",
-    time: "Yesterday",
+    messageKey: "alert_rainfall",
+    timeKey: "time_yesterday",
   },
 ];
 
@@ -124,15 +125,17 @@ const alertIcons = {
 };
 
 const stats = [
-  { label: "Farmers to Reach", value: "120K+" },
-  { label: "Water Reduction Target", value: "38%" },
-  { label: "CO2 Offset Goal", value: "2.4M t" },
-  { label: "Detection Accuracy", value: "94%" },
+  { labelKey: "farmers_to_reach", value: "120K+" },
+  { labelKey: "water_reduction_target", value: "38%" },
+  { labelKey: "co2_offset_goal", value: "2.4M t" },
+  { labelKey: "detection_accuracy", value: "94%" },
 ];
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function Dashboard() {
+  const { t } = useTranslation();
+
   const today = new Date().toLocaleDateString("en-IN", {
     weekday: "long",
     year: "numeric",
@@ -152,12 +155,12 @@ export default function Dashboard() {
         >
           <div>
             <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white">
-              Good morning, Farmer 👋
+              {t("dashboard.good_morning")} 👋
             </h1>
             <p className="text-gray-500 dark:text-gray-400 mt-1">{today}</p>
           </div>
           <span className="text-xs font-semibold bg-amber-100 text-amber-700 px-3 py-1.5 rounded-full border border-amber-200 self-start md:self-auto">
-            📊 Platform Overview — Demo View
+            📊 {t("dashboard.demo_view")}
           </span>
         </motion.div>
 
@@ -172,13 +175,13 @@ export default function Dashboard() {
             className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm p-6"
           >
             <div className="flex items-center justify-between mb-4">
-              <h2 className="font-bold text-lg text-gray-900 dark:text-white">Today's Weather</h2>
+              <h2 className="font-bold text-lg text-gray-900 dark:text-white">{t("dashboard.weather")}</h2>
               <span className="text-xs text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full font-medium">
                 Sample
               </span>
             </div>
             <p className="text-xs text-gray-500 dark:text-gray-400 mb-5">
-              Live data connects to IMD weather API in production
+              {t("dashboard.weather_note")}
             </p>
             <div className="space-y-4">
               {[
@@ -211,7 +214,7 @@ export default function Dashboard() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <Bell size={18} className="text-brand-green" />
-                <h2 className="font-bold text-lg text-gray-900 dark:text-white">Smart Alerts</h2>
+                <h2 className="font-bold text-lg text-gray-900 dark:text-white">{t("dashboard.alerts")}</h2>
               </div>
               <span className="text-xs text-amber-600 dark:text-amber-300 bg-amber-50 dark:bg-amber-900/30 px-2 py-0.5 rounded-full font-medium">
                 Simulated
@@ -224,8 +227,8 @@ export default function Dashboard() {
                   className={`border-l-4 px-4 py-3 rounded-lg text-sm ${alertStyles[alert.type]}`}
                 >
                   <span className="mr-2">{alertIcons[alert.type]}</span>
-                  {alert.message}
-                  <span className="block text-xs text-gray-500 dark:text-gray-400 mt-1">{alert.time}</span>
+                  {t(alert.messageKey)}
+                  <span className="block text-xs text-gray-500 dark:text-gray-400 mt-1">{t(alert.timeKey)}</span>
                 </div>
               ))}
             </div>
@@ -240,7 +243,7 @@ export default function Dashboard() {
           transition={{ delay: 0.3 }}
         >
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-            🌾 Platform Modules
+            🌾 {t("dashboard.modules")}
           </h2>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {modules.map((mod, i) => {
@@ -254,22 +257,22 @@ export default function Dashboard() {
                       </div>
                       {mod.status === "live" ? (
                         <span className="text-xs font-semibold bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-200 px-2 py-0.5 rounded-full">
-                          ✅ Live
+                          ✅ {t("common.live")}
                         </span>
                       ) : (
                         <span className="text-xs font-semibold bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-200 px-2 py-0.5 rounded-full">
-                          🔧 Soon
+                          🔧 {t("common.coming_soon")}
                         </span>
                       )}
                     </div>
                     <h3 className="font-bold text-gray-900 dark:text-white mb-1 text-sm">
-                      {mod.title}
+                      {t(`modules.${mod.titleKey}`)}
                     </h3>
                     <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-                      {mod.desc}
+                      {t(`modules.${mod.descKey}`)}
                     </p>
                     <div className="flex items-center gap-1 mt-3 text-brand-green text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
-                      Open <ArrowRight size={12} />
+                      {t("common.open")} <ArrowRight size={12} />
                     </div>
                   </div>
                 </Link>
@@ -288,14 +291,14 @@ export default function Dashboard() {
           <div className="flex items-center justify-between mb-1">
             <div className="flex items-center gap-2">
               <BarChart2 size={20} className="text-brand-green" />
-              <h2 className="font-bold text-lg text-gray-900 dark:text-white">Crop Price Trends</h2>
+              <h2 className="font-bold text-lg text-gray-900 dark:text-white">{t("dashboard.price_trends")}</h2>
             </div>
             <span className="text-xs font-semibold bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 px-2 py-0.5 rounded-full border border-amber-200 dark:border-amber-500">
-              📊 Simulated Data
+              📊 {t("dashboard.simulated_data")}
             </span>
           </div>
           <p className="text-xs text-gray-500 dark:text-gray-400 mb-6">
-            Illustrative ₹/quintal values — live model connects to Agmarknet mandi price API
+            {t("dashboard.price_note")}
           </p>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
@@ -304,12 +307,12 @@ export default function Dashboard() {
                 <XAxis dataKey="month" stroke="#9CA3AF" />
                 <YAxis stroke="#9CA3AF" />
                 <Tooltip
-                    formatter={(val) => `₹${val}/q`}
-                    contentStyle={{
-                        backgroundColor: "#1F2937",
-                        border: "1px solid #374151",
-                        color: "#F9FAFB",
-                    }}
+                  formatter={(val) => `₹${val}/q`}
+                  contentStyle={{
+                    backgroundColor: "#1F2937",
+                    border: "1px solid #374151",
+                    color: "#F9FAFB",
+                  }}
                 />
                 <Area
                   type="monotone"
@@ -348,14 +351,14 @@ export default function Dashboard() {
           className="bg-brand-green rounded-3xl p-8 text-white"
         >
           <p className="text-center text-emerald-200 text-xs font-semibold uppercase tracking-widest mb-6">
-            🎯 Platform Goals & Projected Impact
+            🎯 {t("dashboard.goals")}
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {stats.map((stat, i) => (
               <div key={i}>
                 <div className="text-4xl font-black mb-2">{stat.value}</div>
                 <div className="text-emerald-100 uppercase tracking-widest text-xs">
-                  {stat.label}
+                  {t(`stats.${stat.labelKey}`)}
                 </div>
               </div>
             ))}

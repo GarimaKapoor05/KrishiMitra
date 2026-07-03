@@ -325,5 +325,38 @@
     "movementDown": "AI قیمتوں میں کمی کی پیش گوئی کرتا ہے۔ جلد فروخت کرنے سے منافع کو زیادہ سے زیادہ کرنے میں مدد مل سکتی ہے۔",
     "roadmapTitle": "کوریج روڈ میپ",
     "roadmapSubtitle": "ایک منڈی سے ہندوستان کے ہر دیہی بازار تک۔"
+  },
+  "dashboard": {
+    "good_morning": "صبح بخیر، کسان",
+    "demo_view": "پلیٹ فارم کا جائزہ — ڈیمو ویو",
+    "weather": "آج کا موسم",
+    "weather_note": "لائیو ڈیٹا پروڈکشن میں IMD موسم API سے منسلک ہوتا ہے",
+    "alerts": "سمارٹ الرٹس",
+    "modules": "پلیٹ فارم ماڈیولز",
+    "price_trends": "فصلوں کی قیمتوں کے رجحانات",
+    "simulated_data": "فرضی ڈیٹا",
+    "price_note": "نمائشی ₹/کوئنٹل قیمتیں — لائیو ماڈل Agmarknet منڈی قیمت API سے منسلک ہوتا ہے",
+    "goals": "پلیٹ فارم کے اہداف اور متوقع اثرات"
+  },
+  "common": {
+    "live": "فعال",
+    "coming_soon": "جلد آرہا ہے",
+    "open": "کھولیں"
+  },
+  "modules": {
+    "crop_recommendation": "فصل کی سفارش",
+    "crop_recommendation_desc": "اپنی مٹی کے لیے AI پر مبنی فصل کی تجاویز حاصل کریں۔",
+    "fertilizer_advisor": "کھاد مشیر",
+    "fertilizer_advisor_desc": "غذائی اجزاء کو بہتر بنائیں اور لاگت کم کریں۔",
+    "irrigation_advisor": "آبپاشی مشیر",
+    "irrigation_advisor_desc": "مٹی کی نمی کی بنیاد پر آبپاشی کا شیڈول بنائیں۔",
+    "price_forecaster": "قیمت کی پیش گوئی",
+    "price_forecaster_desc": "LSTM پر مبنی مارکیٹ قیمت کی پیش گوئی۔",
+    "disease_detection": "بیماری کی شناخت",
+    "disease_detection_desc": "پتے کی تصویر اپ لوڈ کریں اور فوری AI تشخیص حاصل کریں۔",
+    "farm_records": "فارم ریکارڈز",
+    "farm_records_desc": "محفوظ، بلاک چین کے لیے تیار دستاویزات۔",
+    "voice_assistant": "وائس اسسٹنٹ",
+    "voice_assistant_desc": "کثیر لسانی ہینڈز فری زرعی معاونت۔"
   }
 }
