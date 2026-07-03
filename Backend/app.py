@@ -10,8 +10,9 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager, jwt_required
 
 from config import Config
-from models import db
+from models import db, User, Contact, bcrypt
 from auth import auth_bp
+from models import bcrypt
 
 # ====================== PATH SETUP ======================
 
@@ -26,7 +27,6 @@ sys.path.append(os.path.join(BASE_DIR, "market_price_prediction"))
 
 import joblib
 import numpy as np
-from models import db, User, Contact
 
 from predict_crop import predict_crop
 from predict_fertilizer import (
@@ -40,11 +40,12 @@ from predict_price import forecast_price
 app = Flask(__name__)
 app.config.from_object(Config)
 
-CORS(app)
+CORS(app, origins=["http://localhost:5173", "https://your-frontend.vercel.app"])
 
 jwt = JWTManager(app)
 
 db.init_app(app)
+bcrypt.init_app(app)
 
 # Register Authentication Blueprint
 app.register_blueprint(auth_bp, url_prefix="/auth")
@@ -304,12 +305,9 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"❌ Database Error: {e}")
 
-    print("🚀 AgriAI Backend Started")
     print("🔐 JWT Authentication Enabled")
     print("🗄️ SQLAlchemy Database Connected")
-    print("🌐 Server started on http://127.0.0.1:5000")
+    port = int(os.environ.get("PORT", 5000))
+    print(f"🌐 Server running on port {port}")
 
-    app.run(
-        debug=True,
-        port=5000
-    )
+    app.run(host="0.0.0.0", port=port)

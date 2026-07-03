@@ -4,6 +4,8 @@ __pycache__/
 *$py.class
 *.so
 .Python
+
+# Virtual environments
 env/
 venv/
 ENV/
@@ -15,7 +17,7 @@ venv.bak/
 *.sqlite3
 instance/
 
-# Environment variables
+# Environment variables (VERY IMPORTANT)
 .env
 .env.local
 .env.production
@@ -30,7 +32,7 @@ logs/
 *.swp
 *.swo
 
-# Distribution
+# Distribution / build
 dist/
 build/
 *.egg-info/
