@@ -55,10 +55,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Protected Routes */}
-        <Route path="/dashboard" element={
-          <ProtectedRoute><Dashboard /></ProtectedRoute>
-        } />
+        <Route path="/dashboard" element={<Dashboard />} />
 
         <Route path="/crop-prediction" element={<CropPrediction />} />
         <Route path="/fertilizer-prediction" element={<FertilizerPrediction />} />
@@ -66,12 +63,13 @@ function App() {
         <Route path="/disease-detection" element={<DiseaseDetection />} />
         <Route path="/features/price-prediction" element={<MarketPricePrediction />} />
 
-        {/* Coming Soon */}
+        {/* Protected Routes */}
         <Route path="/user-dashboard" element={
           <ProtectedRoute>
             <UserDashboard />
           </ProtectedRoute>
         } />
+        {/* Coming Soon */}
         <Route path="/about" element={<ComingSoon feature="ℹ️ About KrishiMitra" />} />
         <Route path="/careers" element={<ComingSoon feature="💼 Careers" />} />
         <Route path="/press" element={<ComingSoon feature="📰 Press" />} />
