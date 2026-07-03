@@ -1,0 +1,13 @@
+{
+  "nav": {
+    "home": "होम",
+    "dashboard": "डैशबोर्ड",
+    "disease_ai": "रोग AI",
+    "crop_prediction": "फसल पूर्वानुमान",
+    "profile": "प्रोफ़ाइल",
+    "my_dashboard": "मेरा डैशबोर्ड",
+    "logout": "लॉग आउट",
+    "login": "लॉगिन",
+    "get_started": "शुरू करें"
+  }
+}
