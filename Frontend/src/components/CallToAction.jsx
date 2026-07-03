@@ -1,17 +1,53 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Send, MessageCircle, Phone } from "lucide-react";
+import { Send, MessageCircle, Phone, Leaf } from "lucide-react";
 
 export default function CallToAction() {
-  const [phone, setPhone] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: ""
+  });
+  const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [message, setMessage] = useState("");
 
-  const handleContact = (e) => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleContact = async (e) => {
     e.preventDefault();
-    if (!phone) return;
-    // In production: send to backend / CRM
-    setSubmitted(true);
-    setPhone("");
+    if (!formData.phone) return;
+
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const res = await fetch('http://127.0.0.1:5000/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name || "Website Visitor",
+          phone: formData.phone,
+          email: formData.email,
+          message: "Call back request from homepage"
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.success || res.ok) {
+        setSubmitted(true);
+        setMessage("✅ Got it! Our team will call you within 24 hours.");
+        setFormData({ name: "", phone: "", email: "" });
+      } else {
+        setMessage("❌ Something went wrong. Please try again.");
+      }
+    } catch (err) {
+      setMessage("❌ Server error. Please try later.");
+    }
+    setLoading(false);
   };
 
   return (
@@ -28,8 +64,9 @@ export default function CallToAction() {
         </p>
 
         {/* Primary CTA */}
-        <Link to="/signup">
-          <button className="bg-brand-green text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-green-700 transition-all">
+        <Link to="/register">
+          <button className="bg-brand-green text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-green-700 transition-all flex items-center gap-2 mx-auto mb-10">
+            <Leaf size={22} />
             Start Your Smart Farm →
           </button>
         </Link>
@@ -43,55 +80,59 @@ export default function CallToAction() {
           <div className="flex-1 h-px bg-gray-100 dark:bg-gray-700" />
         </div>
 
-        {/* Contact section */}
-        <p className="text-gray-500 dark:text-gray-400 text-sm mb-6">
+        <p className="text-gray-500 dark:text-gray-400 text-sm mb-8">
           Interested in deploying KrishiMitra for your FPO, agri-cooperative,
-          or state agriculture department?{" "}
-          <span className="text-brand-green font-semibold">
-            Leave your number — we'll call you.
-          </span>
+          or state agriculture department? Leave your number — we'll call you.
         </p>
 
         {submitted ? (
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-300 px-6 py-4 rounded-2xl text-sm font-medium">
-            ✅ Got it! Our team will call you within 24 hours.
+          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-300 px-8 py-5 rounded-2xl text-sm font-medium max-w-md mx-auto">
+            {message}
           </div>
         ) : (
-          <form
-            onSubmit={handleContact}
-            className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-          >
-            <div className="flex-1 flex items-center border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 bg-white dark:bg-gray-900 focus-within:ring-2 focus-within:ring-green-400">
-              <Phone size={15} className="text-gray-400 dark:text-gray-500 mr-2 shrink-0" />
+          <form onSubmit={handleContact} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Your name"
+              className="flex-1 px-5 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 focus:outline-none focus:border-green-500"
+            />
+            
+            <div className="flex-1 flex items-center border border-gray-200 dark:border-gray-700 rounded-2xl px-5 py-4 bg-white dark:bg-gray-900 focus-within:ring-2 focus-within:ring-green-400">
+              <Phone size={18} className="text-gray-400 mr-3" />
               <input
                 type="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
                 placeholder="+91 your mobile number"
                 required
-                pattern="[0-9+\s\-]{10,15}"
-                className="w-full text-sm outline-none bg-transparent text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                className="flex-1 text-sm outline-none bg-transparent"
               />
             </div>
+
             <button
               type="submit"
-              className="bg-gray-900 hover:bg-gray-700 text-white px-6 py-3 rounded-xl text-sm font-semibold transition flex items-center gap-2 justify-center"
+              disabled={loading}
+              className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-4 rounded-2xl text-sm font-semibold transition flex items-center gap-2 justify-center disabled:opacity-70 whitespace-nowrap"
             >
-              <Send size={15} />
+              <Send size={16} />
               Call me back
             </button>
           </form>
         )}
 
-        {/* WhatsApp option */}
-        <div className="mt-4">
+        {/* WhatsApp */}
+        <div className="mt-6">
           <a
-            href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I'm%20interested%20in%20KrishiMitra%20for%20my%20farm%2FFPO."
+            href="https://wa.me/919876543210?text=Hi%2C%20I'm%20interested%20in%20KrishiMitra"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm text-gray-400 dark:text-gray-500 hover:text-green-600 dark:hover:text-green-400 transition"
+            className="inline-flex items-center gap-2 text-sm text-gray-400 dark:text-gray-500 hover:text-green-600 transition"
           >
-            <MessageCircle size={15} />
+            <MessageCircle size={18} />
             Or message us on WhatsApp
           </a>
         </div>

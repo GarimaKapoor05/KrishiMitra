@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -19,8 +19,9 @@ import ComingSoon from "./pages/ComingSoon";
 import DiseaseDetection from "./pages/DiseaseDetection";
 import Dashboard from "./pages/Dashboard";
 import MarketPricePrediction from "./pages/MarketPricePrediction";
-import UnderConstruction from "./pages/UnderConstruction";
 
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function Home() {
   return (
@@ -38,22 +39,36 @@ function Home() {
   );
 }
 
+// Protected Route Component
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem('token');
+  return token ? children : <Navigate to="/login" replace />;
+};
+
 function App() {
   return (
-    <div className="min-h-screen bg-bg-light dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-200">
+    <div className="min-h-screen bg-[#FDFEFC] dark:bg-gray-950 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-200">
       <Navbar />
 
       <Routes>
         <Route path="/" element={<Home />} />
+        
+        {/* Public Routes */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* Protected Routes */}
+        <Route path="/dashboard" element={
+          <ProtectedRoute><Dashboard /></ProtectedRoute>
+        } />
+
         <Route path="/crop-prediction" element={<CropPrediction />} />
         <Route path="/fertilizer-prediction" element={<FertilizerPrediction />} />
         <Route path="/features/irrigation" element={<SmartIrrigationAdvisor />} />
         <Route path="/disease-detection" element={<DiseaseDetection />} />
-        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/features/price-prediction" element={<MarketPricePrediction />} />
-        <Route path="/signup" element={<UnderConstruction />} />
-        <Route path="/login" element={<UnderConstruction />} />
 
+        {/* Coming Soon */}
         <Route path="/disease-ai" element={<ComingSoon feature="🔬 AI Disease Detection" />} />
         <Route path="/features/voice-assistant" element={<ComingSoon feature="🎙️ AI Voice Assistant" />} />
         <Route path="/features/health-monitor" element={<ComingSoon feature="🌿 Crop Health Monitoring" />} />

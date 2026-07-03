@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import axios from 'axios';
+import api from "../services/api";
 // Light/Dark mode changes required in this file
 
 export default function DiseaseAI() {
@@ -17,7 +18,7 @@ export default function DiseaseAI() {
 
     try {
       // Sending request to your Flask backend
-      const res = await axios.post('http://localhost:5001/predict', formData);
+      const res = await api.post('http://localhost:5001/predict', formData);
       setResult(res.data);
     } catch (error) {
       console.error("Error diagnosing:", error);
