@@ -103,6 +103,8 @@ export default function Navbar() {
     <span className="text-sm font-medium">
       {i18n.language === "hi"
         ? "हिं"
+        : i18n.language === "ta"
+        ? "த"
         : i18n.language === "ur"
         ? "اردو"
         : "EN"}
@@ -130,6 +132,13 @@ export default function Navbar() {
         className="w-full text-left px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800"
       >
         🇮🇳 हिन्दी
+      </button>
+
+      <button
+        onClick={() => changeLanguage("ta")}
+        className="w-full text-left px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800"
+      >
+        🇮🇳 தமிழ்
       </button>
 
       <button

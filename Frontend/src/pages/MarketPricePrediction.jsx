@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { API_URL } from "../config";
 import {
   TrendingUp,
   TrendingDown,
@@ -16,6 +18,8 @@ import {
 } from "lucide-react";
 
 export default function MarketPricePrediction() {
+  const { t } = useTranslation();
+
   const [crop, setCrop] = useState("rice");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
@@ -40,7 +44,7 @@ export default function MarketPricePrediction() {
       console.error(err);
       setResult({
         status: "error",
-        message: "Unable to connect to the backend. Please ensure the Flask server is running.",
+        message: t("pricePrediction.errBackend"),
       });
     } finally {
       setLoading(false);
@@ -61,23 +65,20 @@ export default function MarketPricePrediction() {
 
         <div className="inline-flex items-center gap-2 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 px-5 py-2 rounded-full text-sm font-semibold mb-5">
           <TrendingUp className="w-4 h-4" />
-          AI Powered LSTM Forecasting
+          {t("pricePrediction.lstmBadge")}
         </div>
 
         <h1 className="text-5xl font-extrabold text-gray-900 dark:text-white leading-tight">
-          Market Price Prediction
+          {t("pricePrediction.title")}
         </h1>
 
         <p className="mt-5 text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-          Predict tomorrow's crop prices using our LSTM-based forecasting model
-          trained on historical mandi data. Get price trends, confidence score,
-          and actionable selling recommendations.
+          {t("pricePrediction.desc")}
         </p>
 
         {/* Roadmap intent line */}
         <p className="mt-3 text-sm text-emerald-700 dark:text-emerald-300 font-medium">
-          🚀 Currently live for Bhopal Mandi — expanding to every district,
-          state, and village market across India.
+          {t("pricePrediction.roadmapLine")}
         </p>
 
       </div>
@@ -90,8 +91,8 @@ export default function MarketPricePrediction() {
             <BarChart3 className="text-emerald-700" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Forecast Parameters</h2>
-            <p className="text-gray-500 dark:text-gray-400">Configure the crop details for AI price prediction.</p>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{t("pricePrediction.forecastParams")}</h2>
+            <p className="text-gray-500 dark:text-gray-400">{t("pricePrediction.paramsDesc")}</p>
           </div>
         </div>
 
@@ -102,7 +103,7 @@ export default function MarketPricePrediction() {
             <div>
               <label className="flex items-center gap-2 font-semibold text-gray-900 dark:text-gray-200 mb-3">
                 <Leaf className="w-4 h-4 text-green-600" />
-                Crop
+                {t("pricePrediction.crop")}
               </label>
               <select
                 value={crop}
@@ -110,19 +111,19 @@ export default function MarketPricePrediction() {
                 className="w-full rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-3 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-green-500 outline-none"
               >
                 <option value="rice" className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white" >
-                  Rice (Paddy)
+                  {t("crops.rice")}
                 </option>
                 <option value="wheat" className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
-                  Wheat
+                  {t("crops.wheat")}
                 </option>
                 <option value="maize" className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
-                  Maize
+                  {t("crops.maize")}
                 </option>
                 <option value="cotton" className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
-                  Cotton
+                  {t("crops.cotton")}
                 </option>
                 <option value="soybean" className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
-                  Soybean
+                  {t("crops.soybean")}
                 </option>
               </select>
             </div>
@@ -131,7 +132,7 @@ export default function MarketPricePrediction() {
             <div>
               <label className="flex items-center gap-2 font-semibold text-gray-900 dark:text-gray-200 mb-3">
                 <CalendarDays className="w-4 h-4 text-green-600" />
-                Forecast Horizon
+                {t("pricePrediction.horizon")}
               </label>
               <input
                 value="Next 24 Hours"
@@ -142,19 +143,16 @@ export default function MarketPricePrediction() {
 
           </div>
 
-          {/* Pilot market info box — reframed */}
+          {/* Pilot market info box */}
           <div className="mt-8 rounded-2xl bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800 p-5">
             <div className="flex items-start gap-3">
               <Radio className="text-emerald-600 mt-0.5 shrink-0" size={18} />
               <div>
                 <p className="text-green-800 dark:text-green-300 font-semibold">
-                  📍 Pilot Market: Bhopal Mandi, Madhya Pradesh
+                  {t("pricePrediction.pilotMarket")}
                 </p>
                 <p className="text-green-700 dark:text-green-400 text-sm mt-1">
-                  Our LSTM model is currently trained on Bhopal mandi historical
-                  data. This is our pilot deployment — the same model architecture
-                  will scale to fetch live Agmarknet data for every mandi across
-                  India as we expand.
+                  {t("pricePrediction.pilotDesc")}
                 </p>
               </div>
             </div>
@@ -169,12 +167,12 @@ export default function MarketPricePrediction() {
             {loading ? (
               <>
                 <Loader2 className="animate-spin w-5 h-5" />
-                Generating Forecast...
+                {t("pricePrediction.generating")}
               </>
             ) : (
               <>
                 <TrendingUp className="w-5 h-5" />
-                Generate AI Forecast
+                {t("pricePrediction.btnForecast")}
               </>
             )}
           </button>
@@ -205,10 +203,10 @@ export default function MarketPricePrediction() {
             </div>
             <div>
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
-                Market Forecast
+                {t("pricePrediction.outlook")}
               </h2>
               <p className="text-gray-500 dark:text-gray-400">
-                AI generated insights for your selected crop.
+                {t("pricePrediction.outlookDesc")}
               </p>
             </div>
           </div>
@@ -220,7 +218,7 @@ export default function MarketPricePrediction() {
               <div className="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center mb-5">
                 <IndianRupee className="text-green-700" />
               </div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Forecast Price</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{t("pricePrediction.price")}</p>
               <h2 className="text-4xl font-black text-gray-900 dark:text-white mt-2">₹{result.forecasted_price}</h2>
               <p className="text-gray-500 dark:text-gray-400 mt-2">per Quintal</p>
             </div>
@@ -229,7 +227,7 @@ export default function MarketPricePrediction() {
               <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 ${trendBg}`}>
                 {trendUp ? <TrendingUp className="text-green-700" /> : <TrendingDown className="text-red-700" />}
               </div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Market Trend</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{t("pricePrediction.trend")}</p>
               <h2 className={`text-3xl font-bold mt-2 ${trendColor}`}>{result.trend}</h2>
               <p className="text-gray-500 dark:text-gray-400 mt-2">Expected direction</p>
             </div>
@@ -238,7 +236,7 @@ export default function MarketPricePrediction() {
               <div className="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center mb-5">
                 <ShieldCheck className="text-blue-700" />
               </div>
-              <p className="text-gray-500 dark:text-gray-400">Confidence</p>
+              <p className="text-gray-500 dark:text-gray-400">{t("pricePrediction.confidence")}</p>
               <h2 className="text-3xl font-bold text-blue-700 mt-2">{result.confidence}</h2>
               <p className="text-gray-500 dark:text-gray-400 mt-2">Model certainty</p>
             </div>
@@ -247,7 +245,7 @@ export default function MarketPricePrediction() {
               <div className="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center mb-5">
                 <Leaf className="text-amber-700" />
               </div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Recommendation</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{t("pricePrediction.recommendation")}</p>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mt-2">{result.recommendation}</h2>
               <p className="text-gray-500 dark:text-gray-400 mt-2">Suggested action</p>
             </div>
@@ -263,8 +261,8 @@ export default function MarketPricePrediction() {
                   {trendUp ? <TrendingUp className="text-green-700" /> : <TrendingDown className="text-red-700" />}
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">Price Movement</h3>
-                  <p className="text-gray-500 dark:text-gray-400">Compared to the latest market price</p>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">{t("pricePrediction.movement")}</h3>
+                  <p className="text-gray-500 dark:text-gray-400">{t("pricePrediction.movementDesc")}</p>
                 </div>
               </div>
               <h2 className={`text-5xl font-black ${trendColor}`}>
@@ -272,8 +270,8 @@ export default function MarketPricePrediction() {
               </h2>
               <p className="text-gray-600 dark:text-gray-300 mt-4 leading-relaxed">
                 {trendUp
-                  ? "The AI predicts an increase in tomorrow's mandi price. Farmers may consider waiting before selling."
-                  : "The AI predicts a drop in price. Selling earlier could help maximize returns."}
+                  ? t("pricePrediction.movementUp")
+                  : t("pricePrediction.movementDown")}
               </p>
             </div>
 
@@ -283,8 +281,8 @@ export default function MarketPricePrediction() {
                   <LineChart className="text-blue-700" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">Market Outlook</h3>
-                  <p className="text-gray-500 dark:text-gray-400">AI generated summary</p>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">{t("pricePrediction.outlook")}</h3>
+                  <p className="text-gray-500 dark:text-gray-400">{t("pricePrediction.outlookDesc")}</p>
                 </div>
               </div>
               <p className="text-lg text-gray-700 dark:text-gray-300 leading-8">{result.outlook}</p>
@@ -297,15 +295,15 @@ export default function MarketPricePrediction() {
             <h3 className="text-2xl font-bold mb-6">AI Summary</h3>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="bg-white/10 rounded-2xl p-5 backdrop-blur">
-                <p className="text-sm opacity-80">Forecast</p>
+                <p className="text-sm opacity-80">{t("pricePrediction.price")}</p>
                 <h2 className="text-3xl font-bold mt-2">₹{result.forecasted_price}</h2>
               </div>
               <div className="bg-white/10 rounded-2xl p-5 backdrop-blur">
-                <p className="text-sm opacity-80">Trend</p>
+                <p className="text-sm opacity-80">{t("pricePrediction.trend")}</p>
                 <h2 className="text-3xl font-bold mt-2">{result.trend}</h2>
               </div>
               <div className="bg-white/10 rounded-2xl p-5 backdrop-blur">
-                <p className="text-sm opacity-80">Recommended Action</p>
+                <p className="text-sm opacity-80">{t("pricePrediction.recommendation")}</p>
                 <h2 className="text-2xl font-bold mt-2">{result.recommendation}</h2>
               </div>
             </div>
@@ -323,9 +321,9 @@ export default function MarketPricePrediction() {
               <MapPin className="text-emerald-700" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Coverage Roadmap</h2>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{t("pricePrediction.roadmapTitle")}</h2>
               <p className="text-gray-500 dark:text-gray-400">
-                From one mandi to every village market in India.
+                {t("pricePrediction.roadmapSubtitle")}
               </p>
             </div>
           </div>

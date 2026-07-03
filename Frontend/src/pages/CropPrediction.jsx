@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { API_URL } from "../config";
+import { useTranslation } from "react-i18next";
 import {
   Sprout,
   Thermometer,
@@ -15,6 +16,7 @@ import {
 
 export default function CropPrediction() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     N: "",
@@ -66,7 +68,7 @@ export default function CropPrediction() {
       setResult(data);
     } catch (err) {
       console.error(err);
-      alert("Unable to connect to backend.");
+      alert(t("cropPrediction.errBackend"));
     }
 
     setLoading(false);
@@ -74,46 +76,46 @@ export default function CropPrediction() {
 
   const fields = [
     {
-      label: "Nitrogen (N)",
+      label: t("cropPrediction.fieldN"),
       name: "N",
       icon: Leaf,
-      placeholder: "e.g. 90",
+      placeholder: t("cropPrediction.placeholderN"),
     },
     {
-      label: "Phosphorus (P)",
+      label: t("cropPrediction.fieldP"),
       name: "P",
       icon: FlaskConical,
-      placeholder: "e.g. 42",
+      placeholder: t("cropPrediction.placeholderP"),
     },
     {
-      label: "Potassium (K)",
+      label: t("cropPrediction.fieldK"),
       name: "K",
       icon: Sprout,
-      placeholder: "e.g. 43",
+      placeholder: t("cropPrediction.placeholderK"),
     },
     {
-      label: "Temperature (°C)",
+      label: t("cropPrediction.fieldTemp"),
       name: "temperature",
       icon: Thermometer,
-      placeholder: "e.g. 25",
+      placeholder: t("cropPrediction.placeholderTemp"),
     },
     {
-      label: "Humidity (%)",
+      label: t("cropPrediction.fieldHumid"),
       name: "humidity",
       icon: Droplets,
-      placeholder: "e.g. 80",
+      placeholder: t("cropPrediction.placeholderHumid"),
     },
     {
-      label: "Soil pH",
+      label: t("cropPrediction.fieldPh"),
       name: "ph",
       icon: FlaskConical,
-      placeholder: "e.g. 6.5",
+      placeholder: t("cropPrediction.placeholderPh"),
     },
     {
-      label: "Rainfall (mm)",
+      label: t("cropPrediction.fieldRain"),
       name: "rainfall",
       icon: CloudRain,
-      placeholder: "e.g. 200",
+      placeholder: t("cropPrediction.placeholderRain"),
     },
   ];
 
@@ -128,13 +130,11 @@ export default function CropPrediction() {
           className="text-center mb-12"
         >
           <h1 className="text-5xl font-extrabold text-brand-green dark:text-emerald-400 mb-4">
-            🌾 AI Crop Prediction
+            {t("cropPrediction.title")}
           </h1>
 
           <p className="text-gray-600 dark:text-gray-300 text-lg max-w-2xl mx-auto">
-            Enter your soil nutrients and weather conditions.
-            Our AI model will recommend the most suitable crop along with
-            confidence score and fertilizer advice.
+            {t("cropPrediction.desc")}
           </p>
         </motion.div>
 
@@ -192,11 +192,11 @@ export default function CropPrediction() {
 
                   <Loader2 className="animate-spin" size={20} />
 
-                  AI is analyzing...
+                  {t("cropPrediction.analyzing")}
 
                 </span>
               ) : (
-                "🌾 Predict Best Crop"
+                t("cropPrediction.btnPredict")
               )}
 
             </button>
@@ -209,7 +209,7 @@ export default function CropPrediction() {
               RESULT SECTION
               PART 2 STARTS HERE
         ============================== */}
-                {result && (
+        {result && (
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -221,7 +221,7 @@ export default function CropPrediction() {
             <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 p-8">
 
               <h2 className="text-2xl font-bold text-brand-green mb-6">
-                🌾 AI Recommendation
+                {t("cropPrediction.recommendation")}
               </h2>
 
               <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 p-8">
@@ -229,11 +229,11 @@ export default function CropPrediction() {
                 <div>
 
                   <p className="text-gray-500 dark:text-gray-400 mb-2">
-                    Recommended Crop
+                    {t("cropPrediction.recCrop")}
                   </p>
 
-                  <h1 className="text-5xl font-extrabold text-green-700">
-                    🌾 {result.recommended_crop.charAt(0).toUpperCase() + result.recommended_crop.slice(1)}
+                  <h1 className="text-5xl font-extrabold text-green-700 dark:text-green-400">
+                    🌾 {t(`crops.${result.recommended_crop}`, { defaultValue: result.recommended_crop })}
                   </h1>
 
                 </div>
@@ -243,7 +243,7 @@ export default function CropPrediction() {
                   <div className="flex justify-between mb-2">
 
                     <span className="font-medium">
-                      Confidence
+                      {t("cropPrediction.confidence")}
                     </span>
 
                     <span className="font-bold text-green-700">
@@ -284,7 +284,7 @@ export default function CropPrediction() {
             <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 p-8">
 
               <h2 className="text-2xl font-bold mb-6">
-                🥇 Top Predictions
+                {t("cropPrediction.topPredictions")}
               </h2>
 
               <div className="space-y-4">
@@ -302,7 +302,7 @@ export default function CropPrediction() {
                       {index === 1 && "🥈 "}
                       {index === 2 && "🥉 "}
 
-                      {item.crop.charAt(0).toUpperCase() + item.crop.slice(1)}
+                      {t(`crops.${item.crop}`, { defaultValue: item.crop })}
 
                     </span>
 
@@ -322,11 +322,11 @@ export default function CropPrediction() {
 
             {/* Fertilizer Advice */}
 
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
+            <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 p-8">
 
               <h2 className="text-2xl font-bold mb-6">
 
-                🌱 Fertilizer Advisor
+                {t("cropPrediction.fertilizerAdvisor")}
 
               </h2>
 
@@ -336,7 +336,7 @@ export default function CropPrediction() {
 
                   <h3 className="font-bold text-lg mb-3">
 
-                    Ideal NPK
+                    {t("cropPrediction.idealNpk")}
 
                   </h3>
 
@@ -344,7 +344,7 @@ export default function CropPrediction() {
 
                     <p>
 
-                      Nitrogen :
+                      {t("cropPrediction.nitrogen")} :
                       {" "}
                       {result.fertilizer_advice.ideal_npk.N}
 
@@ -352,7 +352,7 @@ export default function CropPrediction() {
 
                     <p>
 
-                      Phosphorus :
+                      {t("cropPrediction.phosphorus")} :
                       {" "}
                       {result.fertilizer_advice.ideal_npk.P}
 
@@ -360,7 +360,7 @@ export default function CropPrediction() {
 
                     <p>
 
-                      Potassium :
+                      {t("cropPrediction.potassium")} :
                       {" "}
                       {result.fertilizer_advice.ideal_npk.K}
 
@@ -374,15 +374,15 @@ export default function CropPrediction() {
 
                   <h3 className="font-bold text-lg mb-3">
 
-                    Your Soil
+                    {t("cropPrediction.yourSoil")}
 
                   </h3>
 
-                  <div className="space-y-2 text-gray-700">
+                  <div className="space-y-2 text-gray-700 dark:text-gray-300">
 
                     <p>
 
-                      Nitrogen :
+                      {t("cropPrediction.nitrogen")} :
                       {" "}
                       {result.fertilizer_advice.user_npk.N}
 
@@ -390,7 +390,7 @@ export default function CropPrediction() {
 
                     <p>
 
-                      Phosphorus :
+                      {t("cropPrediction.phosphorus")} :
                       {" "}
                       {result.fertilizer_advice.user_npk.P}
 
@@ -398,7 +398,7 @@ export default function CropPrediction() {
 
                     <p>
 
-                      Potassium :
+                      {t("cropPrediction.potassium")} :
                       {" "}
                       {result.fertilizer_advice.user_npk.K}
 
@@ -414,7 +414,7 @@ export default function CropPrediction() {
 
                 <h3 className="font-bold text-lg mb-4">
 
-                  Suggestions
+                  {t("cropPrediction.suggestions")}
 
                 </h3>
 
@@ -450,7 +450,7 @@ export default function CropPrediction() {
                   }
                   className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-8 py-3 rounded-full font-semibold transition"
                 >
-                  Get Exact Fertilizer Dosage
+                  {t("cropPrediction.getDosage")}
                   <ArrowRight size={18} />
                 </button>
               </div>

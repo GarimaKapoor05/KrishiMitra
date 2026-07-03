@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { API_URL } from "../config";
+import { useTranslation } from "react-i18next";
 import {
   Droplets,
   Thermometer,
@@ -14,6 +15,8 @@ import {
 } from "lucide-react";
 
 export default function SmartIrrigationAdvisor() {
+  const { t } = useTranslation();
+
   const [formData, setFormData] = useState({
     moisture: "",
     humidity: "",
@@ -68,9 +71,7 @@ export default function SmartIrrigationAdvisor() {
       setResult(data);
     } catch (err) {
       console.error(err);
-      setError(
-        "Unable to connect to the AI service. Please ensure the Flask backend is running."
-      );
+      setError(t("irrigationAdvisor.errBackend"));
     } finally {
       setLoading(false);
     }
@@ -113,12 +114,11 @@ export default function SmartIrrigationAdvisor() {
           </div>
 
           <h1 className="text-5xl font-bold tracking-tight text-emerald-950 dark:text-white">
-            Smart Irrigation Advisor
+            {t("irrigationAdvisor.title")}
           </h1>
 
           <p className="mt-4 text-lg text-emerald-700 dark:text-emerald-300 max-w-2xl mx-auto leading-8">
-            Enter your latest field conditions and let AI recommend the most
-            efficient irrigation strategy.
+            {t("irrigationAdvisor.desc")}
           </p>
         </div>
 
@@ -127,11 +127,11 @@ export default function SmartIrrigationAdvisor() {
 
           <div className="mb-8">
             <h2 className="text-2xl font-semibold text-emerald-900 dark:text-white">
-              Enter Field Conditions
+              {t("irrigationAdvisor.fieldConditions")}
             </h2>
 
             <p className="mt-2 text-emerald-600 dark:text-emerald-300">
-              Sample values are acceptable for demonstration purposes.
+              {t("irrigationAdvisor.demoNote")}
             </p>
           </div>
 
@@ -143,26 +143,26 @@ export default function SmartIrrigationAdvisor() {
             {[
               {
                 name: "moisture",
-                label: "Soil Moisture (%)",
-                placeholder: "e.g. 25",
+                label: t("irrigationAdvisor.moisture"),
+                placeholder: t("irrigationAdvisor.placeholderMoisture"),
                 icon: Droplets,
               },
               {
                 name: "humidity",
-                label: "Air Humidity (%)",
-                placeholder: "e.g. 65",
+                label: t("irrigationAdvisor.humidity"),
+                placeholder: t("irrigationAdvisor.placeholderHumidity"),
                 icon: CloudRain,
               },
               {
                 name: "temp",
-                label: "Temperature (°C)",
-                placeholder: "e.g. 30",
+                label: t("irrigationAdvisor.temp"),
+                placeholder: t("irrigationAdvisor.placeholderTemp"),
                 icon: Thermometer,
               },
               {
                 name: "et",
-                label: "Evapotranspiration (mm/day)",
-                placeholder: "e.g. 5.3",
+                label: t("irrigationAdvisor.et"),
+                placeholder: t("irrigationAdvisor.placeholderEt"),
                 icon: Leaf,
               },
             ].map((field) => (
@@ -197,12 +197,12 @@ export default function SmartIrrigationAdvisor() {
                 {loading ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin" />
-                    Generating Recommendation...
+                    {t("irrigationAdvisor.generating")}
                   </>
                 ) : (
                   <>
                     <Sparkles className="w-5 h-5" />
-                    Generate AI Recommendation
+                    {t("irrigationAdvisor.btnPredict")}
                   </>
                 )}
               </button>
@@ -235,11 +235,11 @@ export default function SmartIrrigationAdvisor() {
         <div>
           <h2 className="text-2xl font-bold text-emerald-950 dark:text-white flex items-center gap-2">
             <Sparkles className="w-6 h-6 text-emerald-600" />
-            AI Irrigation Recommendation
+            {t("irrigationAdvisor.recTitle")}
           </h2>
 
           <p className="text-emerald-600 dark:text-emerald-300 mt-1">
-            Generated using your field conditions.
+            {t("irrigationAdvisor.recDesc")}
           </p>
         </div>
 
@@ -249,7 +249,7 @@ export default function SmartIrrigationAdvisor() {
           }`}
         >
           <span>{priorityStyle[result.urgency]?.icon}</span>
-          {result.urgency} Priority
+          {result.urgency} {t("irrigationAdvisor.priority")}
         </span>
 
       </div>
@@ -272,7 +272,7 @@ export default function SmartIrrigationAdvisor() {
           </h3>
 
           <p className="text-emerald-600 dark:text-emerald-300 mt-3">
-            AI-powered recommendation based on the submitted inputs.
+            {t("irrigationAdvisor.recDesc")}
           </p>
 
         </div>
@@ -284,7 +284,7 @@ export default function SmartIrrigationAdvisor() {
           <div className="rounded-2xl border border-emerald-100 dark:border-emerald-900/30 bg-emerald-50 dark:bg-emerald-900/20 p-6">
 
             <p className="text-sm text-emerald-700 dark:text-emerald-300 mb-2">
-              Water Required
+              {t("irrigationAdvisor.waterRequired")}
             </p>
 
             <h4 className="text-3xl font-bold text-emerald-950 dark:text-white">
@@ -296,7 +296,7 @@ export default function SmartIrrigationAdvisor() {
           <div className="rounded-2xl border border-sky-100 dark:border-sky-900/30 bg-sky-50 dark:bg-sky-900/20 p-6">
 
             <p className="text-sm text-sky-700 dark:text-sky-300 mb-2">
-              Recommended Method
+              {t("irrigationAdvisor.recMethod")}
             </p>
 
             <h4 className="text-2xl font-semibold text-sky-900 dark:text-sky-300">
@@ -310,7 +310,7 @@ export default function SmartIrrigationAdvisor() {
           <div className="rounded-2xl border border-amber-100 dark:border-amber-900/30 bg-amber-50 dark:bg-amber-900/20 p-6">
 
             <p className="text-sm text-amber-700 dark:text-amber-300 mb-2">
-              Confidence
+              {t("irrigationAdvisor.confidence")}
             </p>
 
             <h4 className="text-2xl font-semibold text-amber-900 dark:text-amber-300">
@@ -330,7 +330,7 @@ export default function SmartIrrigationAdvisor() {
         <div className="rounded-2xl border border-emerald-100 dark:border-emerald-900/30 bg-emerald-50 dark:bg-emerald-900/20 p-6">
 
           <h4 className="font-semibold text-emerald-950 dark:text-white mb-3">
-            Why this recommendation?
+            {t("irrigationAdvisor.why")}
           </h4>
 
           <p className="text-emerald-800 dark:text-emerald-300 leading-7">
@@ -348,7 +348,7 @@ export default function SmartIrrigationAdvisor() {
         <div className="flex items-center gap-2 mb-6">
           <TrendingUp className="w-5 h-5 text-emerald-600" />
           <h3 className="text-xl font-semibold text-emerald-950 dark:text-white">
-            Key Insights
+            {t("irrigationAdvisor.keyInsights")}
           </h3>
         </div>
 
@@ -358,7 +358,7 @@ export default function SmartIrrigationAdvisor() {
             <div className="flex items-center gap-2 text-emerald-700 mb-3">
               <Clock3 className="w-5 h-5" />
               <span className="text-sm font-medium">
-                Next Irrigation
+                {t("irrigationAdvisor.nextIrrigation")}
               </span>
             </div>
 
@@ -371,7 +371,7 @@ export default function SmartIrrigationAdvisor() {
             <div className="flex items-center gap-2 text-sky-700 mb-3">
               <Droplets className="w-5 h-5" />
               <span className="text-sm font-medium">
-                Estimated Water Saving
+                {t("irrigationAdvisor.estSavings")}
               </span>
             </div>
 
@@ -384,7 +384,7 @@ export default function SmartIrrigationAdvisor() {
             <div className="flex items-center gap-2 text-amber-700 mb-3">
               <CheckCircle2 className="w-5 h-5" />
               <span className="text-sm font-medium">
-                System Status
+                {t("irrigationAdvisor.systemStatus")}
               </span>
             </div>
 
@@ -399,7 +399,7 @@ export default function SmartIrrigationAdvisor() {
           <div className="mt-8">
 
             <h4 className="text-lg font-semibold text-emerald-950 dark:text-white mb-4">
-              Field Observations
+              {t("irrigationAdvisor.fieldObs")}
             </h4>
 
             <div className="space-y-3">

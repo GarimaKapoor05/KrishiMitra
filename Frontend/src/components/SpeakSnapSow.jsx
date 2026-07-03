@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export default function SpeakSnapSow() {
+  const { t } = useTranslation();
+
   return (
     <section className="py-24 px-6 max-w-7xl mx-auto">
       <motion.div
@@ -10,17 +13,17 @@ export default function SpeakSnapSow() {
       >
         <div className="flex flex-col md:flex-row justify-between items-start gap-8">
           <div className="max-w-xl">
-            <span className="text-emerald-400 font-bold uppercase tracking-widest text-sm">Interaction Engine</span>
-            <h2 className="text-4xl font-bold mt-2 mb-6">Multilingual AI-Powered Guidance</h2>
+            <span className="text-emerald-400 font-bold uppercase tracking-widest text-sm">{t("speakSnapSow.badge")}</span>
+            <h2 className="text-4xl font-bold mt-2 mb-6">{t("speakSnapSow.title")}</h2>
             <p className="text-gray-300 text-lg leading-relaxed">
-              Leveraging advanced LLM chains, Whisper for speech-to-text, and ElevenLabs for natural synthesis, KrishiMitra provides real-time, language-agnostic agronomic support.
+              {t("speakSnapSow.desc")}
             </p>
           </div>
           <div className="bg-white/5 border border-white/10 rounded-2xl p-6 font-mono text-sm text-emerald-300 w-full md:w-80 backdrop-blur-sm">
-            <p> initializing_voice_engine...</p>
-            <p> connecting_to_llm_chain...</p>
-            <p> status: <span className="text-white">ONLINE</span></p>
-            <p> latency: <span className="text-white">120ms</span></p>
+            <p>{t("speakSnapSow.term1")}</p>
+            <p>{t("speakSnapSow.term2")}</p>
+            <p>{t("speakSnapSow.term3")}<span className="text-white">{t("speakSnapSow.term3Val")}</span></p>
+            <p>{t("speakSnapSow.term4")}<span className="text-white">{t("speakSnapSow.term4Val")}</span></p>
           </div>
         </div>
       </motion.div>
