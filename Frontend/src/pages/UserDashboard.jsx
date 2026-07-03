@@ -69,7 +69,6 @@ const quickActions = [
     status: "live",
   },
 ];
-
 // ── Simulated recent activity ─────────────────────────────────────────────────
 const recentActivity = [
   {
@@ -94,7 +93,6 @@ const recentActivity = [
     color: "bg-indigo-100 text-indigo-700",
   },
 ];
-
 // ── Simulated alerts ──────────────────────────────────────────────────────────
 const getAlerts = (location) => [
   {
@@ -407,7 +405,6 @@ export default function UserDashboard() {
             </Link>
           </div>
         </motion.div>
-
       </div>
     </div>
   );
