@@ -56,6 +56,13 @@ bcrypt.init_app(app)
 # Register Authentication Blueprint
 app.register_blueprint(auth_bp, url_prefix="/auth")
 
+with app.app_context():
+    try:
+        db.create_all()
+        print("✅ Database tables created/verified")
+    except Exception as e:
+        print(f"❌ Database Error: {e}")
+
 # ====================== LOAD MODELS ======================
 
 irrigation_model = None
@@ -294,22 +301,5 @@ def health():
 # ====================== RUN ======================
 
 if __name__ == "__main__":
-
-    with app.app_context():
-        try:
-            os.makedirs("instance", exist_ok=True)
-
-            db.create_all()
-
-            print("✅ Database & tables created successfully!")
-            print(f"📁 Database location: {app.config['SQLALCHEMY_DATABASE_URI']}")
-
-        except Exception as e:
-            print(f"❌ Database Error: {e}")
-
-    print("🔐 JWT Authentication Enabled")
-    print("🗄️ SQLAlchemy Database Connected")
     port = int(os.environ.get("PORT", 5000))
-    print(f"🌐 Server running on port {port}")
-
     app.run(host="0.0.0.0", port=port)
