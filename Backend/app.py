@@ -33,11 +33,21 @@ from predict_fertilizer import (
     predict_fertilizer,
     get_dosage_for_recommendation
 )
-from predict_price import forecast_price
+# predict_price loads TensorFlow — lazy load to avoid startup RAM spike
+_forecast_price = None
+
+def get_forecast_price():
+    global _forecast_price
+    if _forecast_price is None:
+        from predict_price import forecast_price
+        _forecast_price = forecast_price
+    return _forecast_price
 
 # ====================== APP CONFIG ======================
 
 app = Flask(__name__)
+# Bind to PORT for Render/gunicorn
+PORT = int(os.environ.get("PORT", 5000))
 app.config.from_object(Config)
 
 
@@ -272,15 +282,11 @@ def submit_contact():
 
 @app.route("/api/market/forecast", methods=["POST"])
 def market_forecast_route():
-
     try:
-
         data = request.json
-
+        forecast_price = get_forecast_price()
         result = forecast_price(data)
-
         return jsonify(result)
-
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -302,4 +308,4 @@ def health():
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=port, debug=False)

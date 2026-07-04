@@ -1,10 +1,10 @@
 import os
 import numpy as np
-from tensorflow.keras.models import load_model
 import joblib
 
 def forecast_price(data):
     try:
+        from tensorflow.keras.models import load_model
         base_dir = os.path.dirname(__file__)
         model_dir = os.path.join(base_dir, 'model')
         
