@@ -75,10 +75,10 @@ export default function Navbar() {
 </Link>
 
 <Link
-  to="/disease-ai"
+  to="/features/price-prediction"
   className="hover:text-brand-green dark:hover:text-emerald-400 transition"
 >
-  {t("nav.disease_ai")}
+  {t("nav.price_prediction")}
 </Link>
 
 <Link
