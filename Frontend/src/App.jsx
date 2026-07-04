@@ -70,7 +70,7 @@ function App() {
           </ProtectedRoute>
         } />
         {/* Coming Soon */}
-        <Route path="/about" element={<ComingSoon feature="ℹ️ About KrishiMitra" />} />
+        <Route path="/about" element={<ComingSoon feature="ℹ️ About Krishi AI" />} />
         <Route path="/careers" element={<ComingSoon feature="💼 Careers" />} />
         <Route path="/press" element={<ComingSoon feature="📰 Press" />} />
         <Route path="/contact" element={<ComingSoon feature="📞 Contact Us" />} />

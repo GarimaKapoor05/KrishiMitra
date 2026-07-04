@@ -34,7 +34,7 @@ export default function UnderConstruction() {
 
         {/* Description */}
         <p className="text-gray-600 dark:text-gray-300 leading-8 mb-8">
-          We're currently building secure authentication for KrishiMitra.
+          We're currently building secure authentication for Krishi AI.
           Sign Up and Login will be available in a future update.
         </p>
 

@@ -32,7 +32,7 @@ export default function ComingSoon({ feature = "This Feature" }) {
 
           <p className="text-gray-500 dark:text-gray-400 text-lg mb-10 max-w-md mx-auto">
             Our team is actively building this module. It will be available
-            very soon as part of the KrishiMitra platform.
+            very soon as part of the Krishi AI platform.
           </p>
 
           {/* Progress bar */}

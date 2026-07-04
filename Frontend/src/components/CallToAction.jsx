@@ -128,7 +128,7 @@ export default function CallToAction() {
         {/* WhatsApp */}
         <div className="mt-6">
           <a
-            href="https://wa.me/919876543210?text=Hi%2C%20I'm%20interested%20in%20KrishiMitra"
+            href="https://wa.me/919876543210?text=Hi%2C%20I'm%20interested%20in%20Krishi%20AI"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-sm text-gray-400 dark:text-gray-500 hover:text-green-600 transition"

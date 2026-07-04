@@ -46,7 +46,7 @@ export default function Footer() {
             className="flex items-center gap-2 font-bold text-xl mb-4 text-brand-green dark:text-emerald-400"
           >
             <Leaf />
-            KrishiMitra
+            Krishi AI
           </Link>
 
           <p className="text-gray-500 dark:text-gray-400">

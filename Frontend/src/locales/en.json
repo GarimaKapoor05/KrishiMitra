@@ -13,7 +13,7 @@
   "hero": {
     "title": "Precision Agriculture,",
     "titleGreen": "Optimized.",
-    "desc": "KrishiMitra integrates real-time soil data, hyper-local weather, and market trends to ensure every acre is profitable and sustainable.",
+    "desc": "Krishi AI integrates real-time soil data, hyper-local weather, and market trends to ensure every acre is profitable and sustainable.",
     "btnDashboard": "View Dashboard",
     "btnExplore": "Explore Features",
     "cardTitle": "Farm Metrics Dashboard",
@@ -48,11 +48,11 @@
   },
   "workflow": {
     "title": "The Intelligent Farm Journey",
-    "subtitle": "From soil analysis to market sale — KrishiMitra guides every step of your farming season.",
+    "subtitle": "From soil analysis to market sale — Krishi AI guides every step of your farming season.",
     "step1Title": "Create Your Farm Profile",
     "step1Desc": "Register with your phone number. Add your land area, location, and soil type to get started.",
     "step2Title": "Analyse Your Soil",
-    "step2Desc": "Enter your soil's N-P-K values and pH. KrishiMitra calibrates every recommendation to your actual field conditions.",
+    "step2Desc": "Enter your soil's N-P-K values and pH. Krishi AI calibrates every recommendation to your actual field conditions.",
     "step3Title": "Get Your Crop Recommendation",
     "step3Desc": "Our AI suggests the best crop for your soil, climate, and season — with a confidence score and expected yield.",
     "step4Title": "Plan Your Fertilizer",
@@ -84,7 +84,7 @@
   "speakSnapSow": {
     "badge": "Interaction Engine",
     "title": "Multilingual AI-Powered Guidance",
-    "desc": "Leveraging advanced LLM chains, Whisper for speech-to-text, and ElevenLabs for natural synthesis, KrishiMitra provides real-time, language-agnostic agronomic support.",
+    "desc": "Leveraging advanced LLM chains, Whisper for speech-to-text, and ElevenLabs for natural synthesis, Krishi AI provides real-time, language-agnostic agronomic support.",
     "term1": " initializing_voice_engine...",
     "term2": " connecting_to_llm_chain...",
     "term3": "status: ",
@@ -112,7 +112,7 @@
     "desc": "Built for Indian farmers — AI-powered crop advice, fertilizer recommendations, and irrigation scheduling, all in one platform.",
     "btnStart": "Start Your Smart Farm →",
     "divider": "or get in touch",
-    "note": "Interested in deploying KrishiMitra for your FPO, agri-cooperative, or state agriculture department? Leave your number — we'll call you.",
+    "note": "Interested in deploying Krishi AI for your FPO, agri-cooperative, or state agriculture department? Leave your number — we'll call you.",
     "success": "✅ Got it! Our team will call you within 24 hours.",
     "errWrong": "❌ Something went wrong. Please try again.",
     "errServer": "❌ Server error. Please try later.",
@@ -133,7 +133,7 @@
     "carbonReports": "Carbon Reports",
     "climateAction": "Climate Action",
     "partnerFarms": "Partner Farms",
-    "copyright": "© 2026 KrishiMitra • Built for a greener tomorrow 🌿"
+    "copyright": "© 2026 Krishi AI • Built for a greener tomorrow 🌿"
   },
   "exploreFeatures": {
     "title": "Platform Capabilities",
@@ -281,7 +281,7 @@
   },
   "diseaseDetection": {
     "title": "AI Crop Disease Detection",
-    "desc": "Upload a crop leaf image and let KrishiMitra identify diseases using deep learning in just a few seconds.",
+    "desc": "Upload a crop leaf image and let Krishi AI identify diseases using deep learning in just a few seconds.",
     "uploadLeaf": "Upload Crop Leaf",
     "formats": "Supported formats: JPG, JPEG, PNG",
     "clickUpload": "Click to upload a leaf image",

@@ -69,7 +69,7 @@ function Login() {
               <Leaf size={36} />
             </div>
             <h1 className="text-3xl font-extrabold text-brand-green">
-              KrishiMitra
+              Krishi AI
             </h1>
           </Link>
           <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm">
@@ -153,7 +153,7 @@ function Login() {
                 </>
               ) : (
                 <>
-                  Login to KrishiMitra
+                  Login to Krishi AI
                   <ArrowRight size={16} />
                 </>
               )}
@@ -162,7 +162,7 @@ function Login() {
           </form>
 
           <p className="text-center mt-8 text-sm text-gray-500 dark:text-gray-400">
-            New to KrishiMitra?{' '}
+            New to Krishi AI?{' '}
             <Link
               to="/register"
               className="text-brand-green font-semibold hover:underline"

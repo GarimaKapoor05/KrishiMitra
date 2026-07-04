@@ -55,7 +55,7 @@ export default function Navbar() {
           className="flex items-center gap-2 font-bold text-xl text-gray-900 dark:text-white hover:text-brand-green dark:hover:text-emerald-400 transition"
         >
           <Leaf className="text-brand-green dark:text-emerald-400" />
-          KrishiMitra
+          Krishi AI
         </Link>
 
         {/* Navigation */}
