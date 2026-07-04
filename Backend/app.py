@@ -56,7 +56,17 @@ ALLOWED_ORIGINS = [
     "https://krishi-ai-sepia.vercel.app"
 ]
 
-CORS(app, origins=ALLOWED_ORIGINS, supports_credentials=True)
+CORS(app, origins=ALLOWED_ORIGINS, supports_credentials=True, expose_headers=["Content-Type"])
+
+@app.after_request
+def after_request(response):
+    origin = request.headers.get("Origin")
+    if origin in ALLOWED_ORIGINS:
+        response.headers["Access-Control-Allow-Origin"] = origin
+        response.headers["Access-Control-Allow-Credentials"] = "true"
+        response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    return response
 
 jwt = JWTManager(app)
 
