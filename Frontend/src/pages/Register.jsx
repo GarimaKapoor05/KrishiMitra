@@ -38,6 +38,7 @@ function Register() {
       const data = await res.json();
 
       if (res.ok) {
+        login(data.access_token, data.user);
         navigate('/user-dashboard', { replace: true });
       } else {
         setError(data.error || 'Registration failed');
