@@ -3,7 +3,7 @@ Flask-Bcrypt==1.0.1
 flask-cors==6.0.5
 Flask-JWT-Extended==4.7.4
 Flask-SQLAlchemy==3.1.1
-gunicorn==<your_version>
+gunicorn==26.0.0
 joblib==1.5.3
 keras==3.15.0
 numpy==2.4.3
