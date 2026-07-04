@@ -34,7 +34,15 @@ def login():
         access_token = create_access_token(identity=str(user.id))
         return jsonify({
             "access_token": access_token,
-            "user": {"id": user.id, "username": user.username, "email": user.email}
+            "user": {
+                "id": user.id,
+                "username": user.username,
+                "email": user.email,
+                "phone": user.phone,
+                "farm_size": user.farm_size,
+                "location": user.location,
+                "created_at": user.created_at.isoformat() if user.created_at else None
+            }
         }), 200
     
     return jsonify({"error": "Invalid credentials"}), 401
